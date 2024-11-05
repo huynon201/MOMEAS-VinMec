@@ -118,7 +118,7 @@ body {
   list-style: none;
   height: 50px;
 }
-.trang-chu {
+.active {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 6px 12px -2px #32325d40, 0 3px 7px -3px #0000004d;
