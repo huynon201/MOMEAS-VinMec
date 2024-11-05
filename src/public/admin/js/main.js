@@ -26,7 +26,6 @@ const handleResize = () => {
     }
   }
 };
-document.body.style.backgroundColor = "blue";
 
 window.addEventListener("resize", handleResize);
 

@@ -191,3 +191,138 @@ body {
   padding: 0 !important;
 }
 /* sidebar */
+.search-box {
+  height: 46px;
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid #aaa;
+  outline: none;
+  border-radius: 8px;
+  padding: 0 15px;
+  font-size: 18px;
+  color: #333;
+}
+.search-box-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+.search-box {
+  padding-left: 40px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #aaa;
+}
+
+.search-box::placeholder {
+  font-size: 14px;
+  color: #aaa;
+}
+.navbar img {
+  height: 40px;
+  width: 40px;
+  margin-left: 20px;
+}
+.btn-out {
+  height: 46px;
+  white-space: nowrap;
+  margin-left: 3px;
+}
+/* Responsive */
+@media screen and (max-width: 800px) {
+  .sidebar {
+    left: 0;
+    /* z-index: 1000; */
+  }
+  .sidebar.close {
+    left: -100%;
+  }
+  #sidebar-close {
+    display: block;
+  }
+  #lock-icon {
+    display: none;
+  }
+  .navbar {
+    left: 0;
+    max-width: 100%;
+    transform: translateX(0%);
+  }
+  #sidebar-open {
+    display: block;
+  }
+  .btn-out {
+    display: none;
+  }
+}
+
+.colum-title {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin: 20px 0px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px -2px #32325d40, 0 3px 7px -3px #0000004d;
+
+  background-color: #1dcbdf;
+  color: white;
+
+  font-size: 30px;
+  font-weight: bold;
+}
+.colum-title p {
+  margin: 0px 10px;
+}
+.row {
+  margin: 0;
+  padding: 0;
+}
+/* Khi sidebar mở khóa */
+.colum-content.locked {
+  margin-left: 270px;
+  width: calc(100% - 270px);
+}
+
+/* Khi sidebar đóng */
+.colum-content.closed {
+  margin-left: 75px;
+  width: calc(100% - 75px);
+}
+
+/* Khi sidebar không có */
+.colum-content.full {
+  margin-left: 0;
+  width: 100%;
+}
+
+.colum-content {
+  transition: margin-left 0.4s ease, width 0.4s ease;
+}
+.carousel img {
+  height: 300px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  list-style-type: none;
+}
+.btn-in {
+  height: 46px;
+  white-space: nowrap;
+}
+.colum-supplies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
