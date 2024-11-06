@@ -18,9 +18,16 @@ const checkUniqueId = async (id) => {
   );
   return rows[0].count === 0; // Trả về true nếu id là duy nhất
 };
-
+const deleteCategorary = async (id) => {
+  let [results, fields] = await connection.query(
+    `DELETE FROM categories WHERE id = ?`,
+    [id]
+  );
+  return results;
+};
 module.exports = {
   displayCategorary,
   createCatrgory,
   checkUniqueId,
+  deleteCategorary,
 };

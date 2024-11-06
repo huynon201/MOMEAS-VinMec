@@ -3,6 +3,7 @@ const {
   displayCategorary,
   createCatrgory,
   checkUniqueId,
+  deleteCategorary,
 } = require("../services/CRUDService");
 const { generateRandomId } = require("../untils/randomUntils");
 const getHomePage = async (req, res) => {
@@ -16,16 +17,21 @@ const getCategoraryPage = async (req, res) => {
   });
 };
 const postCategorary = async (req, res) => {
+  let id;
   let isUnique = false;
   while (!isUnique) {
-    const id = generateRandomId();
+    id = generateRandomId();
     isUnique = await checkUniqueId(id);
   }
   const { name, des } = req.body;
   await createCatrgory(id, name, des);
   res.redirect("/categorary");
 };
-const postDeleteCategorary = (req, res) => {
+const postDeleteCategorary = async (req, res) => {
+  // const id = await displayCategorary();
+  const id = req.body.id;
+  console.log(id);
+  await deleteCategorary(id);
   res.redirect("/categorary");
 };
 module.exports = {
