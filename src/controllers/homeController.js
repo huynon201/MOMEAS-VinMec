@@ -34,9 +34,15 @@ const postDeleteCategorary = async (req, res) => {
   await deleteCategorary(id);
   res.redirect("/categorary");
 };
+const getLoginPage = async (req, res) => {
+  return res.render("login.ejs");
+};
+const postloginEndpoint = async (req, res) => {};
 module.exports = {
   getHomePage,
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
+  getLoginPage,
+  postloginEndpoint,
 };
