@@ -18,6 +18,7 @@ const checkUniqueId = async (id) => {
   );
   return rows[0].count === 0; // Trả về true nếu id là duy nhất
 };
+
 module.exports = {
   displayCategorary,
   createCatrgory,

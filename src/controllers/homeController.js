@@ -10,7 +10,7 @@ const getHomePage = async (req, res) => {
 };
 const getCategoraryPage = async (req, res) => {
   let categorary = await displayCategorary();
-  res.render("categorary.ejs", {
+  return res.render("categorary.ejs", {
     activePage: "category",
     listcategori: categorary,
   });
@@ -25,8 +25,12 @@ const postCategorary = async (req, res) => {
   await createCatrgory(id, name, des);
   res.redirect("/categorary");
 };
+const postDeleteCategorary = (req, res) => {
+  res.redirect("/categorary");
+};
 module.exports = {
   getHomePage,
   getCategoraryPage,
   postCategorary,
+  postDeleteCategorary,
 };
