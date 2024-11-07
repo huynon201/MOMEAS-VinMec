@@ -6,6 +6,7 @@ const {
   deleteCategorary,
 } = require("../services/CRUDService");
 const { generateRandomId } = require("../untils/randomUntils");
+
 const getHomePage = async (req, res) => {
   return res.render("home.ejs", { activePage: "home" });
 };
@@ -34,15 +35,10 @@ const postDeleteCategorary = async (req, res) => {
   await deleteCategorary(id);
   res.redirect("/categorary");
 };
-const getLoginPage = async (req, res) => {
-  return res.render("login.ejs");
-};
-const postloginEndpoint = async (req, res) => {};
+
 module.exports = {
   getHomePage,
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
-  getLoginPage,
-  postloginEndpoint,
 };

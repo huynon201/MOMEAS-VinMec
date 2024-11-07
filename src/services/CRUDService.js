@@ -1,5 +1,7 @@
 const connection = require("../configs/database");
 
+// category-feature
+
 const displayCategorary = async (req, res) => {
   let [results, fields] = await connection.query(`SELECT * FROM categories`);
   return results;
@@ -25,6 +27,7 @@ const deleteCategorary = async (id) => {
   );
   return results;
 };
+
 module.exports = {
   displayCategorary,
   createCatrgory,

@@ -266,17 +266,22 @@
           </div>
           <form action="/login-endpoint" method="POST">
             <div class="modal-body">
+              <% if (query.error === 'wrongpassword') { %>
+              <p class="text-danger">Mật khẩu không đúng. Vui lòng thử lại.</p>
+              <% } else if (query.error === 'usernotfound') { %>
+              <p class="text-danger">Người dùng không tồn tại.</p>
+              <% } %>
               <div class="mb-3">
-                <label for="" class="form-label">Tên đăng nhập</label>
+                <label for="username" class="form-label">Tên đăng nhập</label>
                 <input
                   type="text"
                   class="form-control"
                   name="username"
                   id="username"
-                  placeholder="Nhập tên đặng nhập" />
+                  placeholder="Nhập tên đăng nhập" />
               </div>
               <div class="mb-3">
-                <label for="" class="form-label">Mật khẩu</label>
+                <label for="password" class="form-label">Mật khẩu</label>
                 <input
                   type="password"
                   class="form-control"
