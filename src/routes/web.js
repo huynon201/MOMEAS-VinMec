@@ -1,29 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const {
-  authenticateJWT,
-  authorizeAdmin,
-  authorizeUser,
-} = require("../middleware/jwtMiddleware");
+const adminRouter = express.Router();
+const userRouter = express.Router();
+
 const {
   getHomePage,
+  getHomePagee,
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
 } = require("../controllers/homeController");
 const { login, getLoginPage } = require("../controllers/authController");
 
-router.use(authenticateJWT);
-
-router.use("/admin", authorizeAdmin);
-router.get("/admin", getHomePage);
-router.get("/admin/categorary", getCategoraryPage);
-router.post("/admin/create-category", postCategorary);
-router.post("/admin/delete-category", postDeleteCategorary);
-// router.get("/", getHomePage);
-// router.get("/categorary", getCategoraryPage);
-// router.post("/create-category", postCategorary);
-// router.post("/delete-category", postDeleteCategorary);
+adminRouter.get("/", getHomePage);
+adminRouter.get("/categorary", getCategoraryPage);
+adminRouter.post("/create-category", postCategorary);
+adminRouter.post("/delete-category", postDeleteCategorary);
+userRouter.get("/", getHomePagee);
 router.get("/login", getLoginPage);
 router.post("/login-endpoint", login);
-module.exports = router;
+module.exports = {
+  router,
+  adminRouter,
+  userRouter,
+};

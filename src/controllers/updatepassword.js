@@ -5,7 +5,7 @@ const connection = require("../configs/database");
 async function updatePassword() {
   try {
     // Băm mật khẩu mới
-    const hashedPassword = await bcrypt.hash("123456", 10);
+    const hashedPassword = await bcrypt.hash("1", 10);
 
     // Cập nhật mật khẩu đã mã hóa cho user 'a1'
     await connection.query("UPDATE users SET password = ? WHERE username = ?", [

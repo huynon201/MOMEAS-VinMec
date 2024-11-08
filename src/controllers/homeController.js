@@ -10,6 +10,9 @@ const { generateRandomId } = require("../untils/randomUntils");
 const getHomePage = async (req, res) => {
   return res.render("home.ejs", { activePage: "home" });
 };
+const getHomePagee = async (req, res) => {
+  res.send("home");
+};
 const getCategoraryPage = async (req, res) => {
   let categorary = await displayCategorary();
   return res.render("categorary.ejs", {
@@ -41,4 +44,5 @@ module.exports = {
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
+  getHomePagee,
 };

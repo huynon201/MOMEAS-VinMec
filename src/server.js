@@ -1,18 +1,26 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
 
-const connection = require("./configs/database");
-const router = require("./routes/web");
+const { router, adminRouter, userRouter } = require("./routes/web");
 const configViewEngine = require("./configs/viewEngine");
+const {
+  authenticateJWT,
+  authorizeAdmin,
+  authorizeUser,
+} = require("./middleware/jwtMiddleware");
+// req.body
+app.use(express.json()); // for json
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); // Sử dụng cookie-parser để đọc cookie
+configViewEngine(app);
 
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
-configViewEngine(app);
-// req.body
-app.use(express.json()); // for json
-app.use(express.urlencoded({ extended: true }));
+app.use("/admin", authenticateJWT, authorizeAdmin, adminRouter);
+app.use("/user", authenticateJWT, authorizeUser, userRouter);
 
 app.use("/", router);
 
