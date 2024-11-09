@@ -25,6 +25,8 @@
     <!-- css -->
     <link rel="stylesheet" href="/admin/css/style.css" />
     <link rel="stylesheet" href="/admin/css/category.css" />
+    <!-- JavaScript  -->
+    <script src="/admin/js/main.js" defer></script>
   </head>
 
   <body>
@@ -37,7 +39,7 @@
         </div>
         <div class="btn-add">
           <button
-            id="TaoTK"
+            id="tao"
             type="button"
             class="rounded-2"
             data-bs-toggle="modal"
@@ -60,7 +62,7 @@
                     class="btn-close position-absolute end-0 me-3"
                     data-bs-dismiss="modal"></button>
                 </div>
-                <form action="/create-category" method="POST">
+                <form action="/admin/create-category" method="POST">
                   <div class="modal-body">
                     <div class="mb-3 mt-3">
                       <p>Tên danh mục:</p>
@@ -68,7 +70,7 @@
                         type="text"
                         id="name"
                         class="form-control"
-                        placeholder="Tên vật tư"
+                        placeholder="Tên danh mục"
                         name="name"
                         required />
                     </div>
@@ -107,28 +109,7 @@
                 <th>Hành động</th>
               </tr>
             </thead>
-            <!-- <tbody>
-              <% listcategori.forEach(function(category, index) {%>
-              <tr>
-                <td><%= index + 1%></td>
-                <td><%= category.id %></td>
-                <td><%= category.name %></td>
-                <td><%= category.description %></td>
-                <td>
-                  <button class="btn btn-warning">Sửa</button>
-                  <form
-                    action="/delete-category"
-                    method="POST"
-                    style="display: inline">
-                    <input type="hidden" name="id" value="<%= category.id %>" />
-                    <button type="submit" class="btn btn-danger xoa">
-                      Xóa
-                    </button>
-                  </form>
-                </td>
-              </tr>
-              <%}); %>
-            </tbody> -->
+
             <tbody>
               <% listcategori.forEach(function(category, index) { %>
               <tr>
@@ -162,7 +143,7 @@
                         Hủy
                       </button>
                       <form
-                        action="/delete-category"
+                        action="/admin/delete-category"
                         method="POST"
                         style="display: inline">
                         <input
@@ -185,24 +166,6 @@
         </div>
       </div>
     </div>
-    <!-- <div id="confirmDelete" class="popover-content d-none">
-      <div class="popover-heading">
-        <i
-          style="color: orange; font-size: 20px; margin-right: 5px"
-          class="bx bxs-error bx-flashing"></i>
-        <span>Bạn có muốn xóa không?</span>
-      </div>
-      <div class="popover-body">
-        <button class="btn btn-outline-primary btn-sm cancel">Hủy</button>
-        <form action="/delete-category" method="POST" style="display: inline">
-          <button type="submit" class="btn btn-outline-danger btn-sm">
-            Có
-          </button>
-        </form>
-      </div>
-    </div> -->
     <div id="alert-container"></div>
-    <!-- JavaScript  -->
   </body>
-  <script src="/admin/js/main.js"></script>
 </html>

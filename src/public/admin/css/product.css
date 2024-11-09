@@ -1,0 +1,50 @@
+.show-table img {
+  width: 50px;
+  height: 50px;
+}
+.upload-btn-wrapper {
+  position: relative;
+  width: 30%;
+  height: 120px;
+  border: 1.3px dashed gray;
+  border-radius: 10px;
+  background-color: #faf1f16c;
+  cursor: pointer;
+}
+
+.upload-wrapper.plus {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2; /* Đảm bảo input ở trên cùng để nhận sự kiện click */
+}
+
+.upload-wrapper .plus,
+.upload-wrapper span {
+  pointer-events: none; /* Đảm bảo các phần tử khác không chặn sự kiện click */
+}
+.upload-wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.upload-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

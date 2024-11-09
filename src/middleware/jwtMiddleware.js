@@ -26,8 +26,6 @@ const authenticateJWT = (req, res, next) => {
 
 // Middleware kiểm tra quyền admin
 const authorizeAdmin = (req, res, next) => {
-  console.log("req.user trong authorizeAdmin:", req.user);
-  console.log("req.user.role trong authorizeAdmin:", req.user.role);
   if (req.user && req.user.role === 1) {
     return next(); // Tiếp tục nếu là admin
   }
@@ -36,8 +34,6 @@ const authorizeAdmin = (req, res, next) => {
 
 // Middleware kiểm tra quyền user
 const authorizeUser = (req, res, next) => {
-  console.log("req.user trong authorizeUser:", req.user);
-  console.log("req.user.role trong authorizeUser:", req.user.role);
   if (req.user && req.user.role === 2) {
     return next(); // Tiếp tục nếu là user
   }

@@ -1,4 +1,3 @@
-const connection = require("../configs/database");
 const {
   displayCategorary,
   createCatrgory,
@@ -29,14 +28,14 @@ const postCategorary = async (req, res) => {
   }
   const { name, des } = req.body;
   await createCatrgory(id, name, des);
-  res.redirect("/categorary");
+  res.redirect("/admin/categorary");
 };
 const postDeleteCategorary = async (req, res) => {
   // const id = await displayCategorary();
   const id = req.body.id;
   console.log(id);
   await deleteCategorary(id);
-  res.redirect("/categorary");
+  res.redirect("/admin/categorary");
 };
 
 module.exports = {
