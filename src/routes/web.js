@@ -17,7 +17,7 @@ adminRouter.get("/categorary", getCategoraryPage);
 adminRouter.post("/create-category", postCategorary);
 adminRouter.post("/delete-category", postDeleteCategorary);
 userRouter.get("/", getHomePagee);
-router.get("/login", getLoginPage);
+router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
 module.exports = {
   router,

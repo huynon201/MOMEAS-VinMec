@@ -21,7 +21,6 @@ const login = async (req, res) => {
         maxAge: 3600000,
       });
 
-      // Kiểm tra role và chuyển hướng dựa trên role
       if (user.role_id === 1) {
         res.redirect("/admin");
       } else if (user.role_id === 2) {
