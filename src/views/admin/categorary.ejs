@@ -112,6 +112,8 @@
 
             <tbody>
               <% listcategori.forEach(function(category, index) { %>
+              <%#if(category.name == "a") { %> <%# (!"searchInput" ||
+              category.name.includes("a")) { %>
               <tr>
                 <td><%= index + 1 %></td>
                 <td><%= category.id %></td>
@@ -160,12 +162,11 @@
                   </div>
                 </td>
               </tr>
-              <% }); %>
+              <%# } %> <%}); %>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-    <div id="alert-container"></div>
   </body>
 </html>

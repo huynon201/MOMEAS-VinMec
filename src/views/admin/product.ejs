@@ -34,6 +34,7 @@
       crossorigin="anonymous"></script>
 
     <script src="/admin/js/main.js" defer></script>
+    <script src="/admin/js/datalist.js" defer></script>
   </head>
   <body>
     <div class="row">
@@ -112,15 +113,18 @@
                       <p>Danh mục</p>
                       <fieldset>
                         <input
+                          id="category"
                           type="search"
                           autocomplete="off"
-                          role="combobox"
-                          list=""
-                          id="danh-muc"
                           class="form-control"
                           name="category"
+                          placeholder="Chọn danh mục"
                           required />
-                        <datalist id="browsers" role="listbox"></datalist>
+                        <ul id="suggestions" class="suggestions">
+                          <% listCategories.forEach(function(category){%>
+                          <li><%= category.name %></li>
+                          <% }); %>
+                        </ul>
                       </fieldset>
                     </div>
                     <div class="mb-3">
@@ -233,20 +237,6 @@
         const imgURL = URL.createObjectURL(e.target.files[0]);
         $("#avatarPreview").attr("src", imgURL);
         $("#avatarPreview").css({ display: "block" });
-        // $(".plus").css({ opacity: 0 });
-        // avatarFile.val("");
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(() => {
-      const avatarFile = $("#image");
-      avatarFile.change(function (e) {
-        const imgURL = URL.createObjectURL(e.target.files[0]);
-        $("#avatarPreview").attr("src", imgURL);
-        $("#avatarPreview").css({ display: "block" });
-        // $(".plus").css({ opacity: 0 });
-        // avatarFile.val("");
       });
     });
   </script>

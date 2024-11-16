@@ -3,6 +3,7 @@ const {
   createCatrgory,
   checkUniqueId,
   deleteCategorary,
+  checkCategoryUsedInProduct,
 } = require("../services/CRUDService");
 const { generateRandomId } = require("../untils/randomUntils");
 
@@ -31,11 +32,10 @@ const postCategorary = async (req, res) => {
   res.redirect("/admin/categorary");
 };
 const postDeleteCategorary = async (req, res) => {
-  // const id = await displayCategorary();
   const id = req.body.id;
-  console.log(id);
   await deleteCategorary(id);
   res.redirect("/admin/categorary");
+  response.send(error);
 };
 
 module.exports = {

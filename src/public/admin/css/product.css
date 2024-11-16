@@ -48,3 +48,25 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* danh muc  */
+.suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  display: none;
+  max-height: 150px; /* Đặt giới hạn chiều cao nếu cần */
+  overflow-y: auto;
+}
+
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions li:hover,
+.suggestions li.active {
+  background-color: #f0f0f0;
+}

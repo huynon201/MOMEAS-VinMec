@@ -19,7 +19,14 @@ const createProducts = async (
     [name, des, quantity, brand, color, size, image, category]
   );
 };
+
+const displayCategory = async (req, res) => {
+  let [result, fields] = await connection.query(`SELECT name FROM categories`);
+  return result;
+};
+
 module.exports = {
   createProducts,
   displayProduct,
+  displayCategory,
 };
