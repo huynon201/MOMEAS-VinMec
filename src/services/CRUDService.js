@@ -3,15 +3,17 @@ const connection = require("../configs/database");
 // category-feature
 
 const displayCategorary = async (req, res) => {
-  let [results, fields] = await connection.query(`SELECT * FROM categories`);
+  let [results, fields] = await connection.query(
+    `SELECT * FROM categories ORDER BY created_at ASC`
+  );
   return results;
 };
 
-const createCatrgory = async (id, name, des) => {
+const createCatrgory = async (id, name, des, create_at) => {
   let [results, fields] = await connection.query(
-    `INSERT INTO categories(id, name, description)
-        VALUES (?, ?, ?)`,
-    [id, name, des]
+    `INSERT INTO categories(id, name, description, created_at)
+        VALUES (?, ?, ?, ?)`,
+    [id, name, des, create_at]
   );
 };
 const checkUniqueId = async (id) => {

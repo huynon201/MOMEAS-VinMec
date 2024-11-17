@@ -25,6 +25,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="/admin/css/style.css" />
+    <link rel="stylesheet" href="/admin/css/home.css" />
   </head>
 
   <body>
@@ -142,11 +143,74 @@
           <p>Vật tư và thiết bị</p>
         </div>
 
-        <div class="colum-supplies row justify-content-between"></div>
+        <div class="colum-supplies justify-content-between">
+          <% listProduct.forEach(function(product){%>
+          <div
+            class="card"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-<%= product.id %>">
+            <img
+              class="card-img-top"
+              src="/assets/content/upload/<%= product.image %>"
+              alt="ảnh sản phẩm" />
+            <div class="card-body">
+              <h4 class="card-title"><%= product.name %></h4>
+            </div>
+            <div class="icon-shopping">
+              <i class="bx bxs-shopping-bag"></i>
+              <p class="number-vat-tu" data-name="${item.tenVatTu}">
+                <%= product.quantity %>
+              </p>
+            </div>
+          </div>
+
+          <%})%>
+        </div>
       </div>
     </div>
-
-    <!-- JavaScript  -->
-    <script src="/admin/js/main.js"></script>
+    <!-- modal hien thi san pham -->
+    <% listProduct.forEach(function(product){%>
+    <div class="modal fade" id="modal-<%= product.id  %>">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="row">
+            <div class="col-sm-6">
+              <img
+                style="object-fit: cover"
+                class="w-100 h-100"
+                src="/assets/content/upload/<%= product.image %>"
+                alt="" />
+            </div>
+            <div class="col-sm-6">
+              <div
+                class="modal-header d-flex justify-content-center align-items-center text-center">
+                <h4 class="modal-title w-100"><%= product.name %></h4>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p>Mô tả</p>
+                <p><%= product.description %></p>
+                <p>Danh mục</p>
+                <p><%= product.category_name%></p>
+                <p>Thương hiệu</p>
+                <p><%= product.brand %></p>
+                <p>Màu</p>
+                <p><%= product.color %></p>
+                <p>Số lượng</p>
+                <p><%= product.quantity %></p>
+                <p>Kích thước</p>
+                <p><%= product.size %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
   </body>
+  <!-- JavaScript  -->
+  <script src="/admin/js/main.js"></script>
 </html>

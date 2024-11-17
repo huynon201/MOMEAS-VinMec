@@ -34,8 +34,6 @@ adminRouter.post(
   postCreateProduct
 );
 
-userRouter.get("/", getHomePagee);
-
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
 module.exports = {
