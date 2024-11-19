@@ -85,55 +85,6 @@ sidebarOpenBtn.addEventListener("click", toggleSidebar);
 sidebarCloseBtn.addEventListener("click", toggleSidebar);
 
 handleResize();
-// main
-
-// function attachDeleteListeners() {
-//   document.querySelectorAll(".xoa").forEach((button) => {
-//     button.addEventListener("click", function () {
-//       // Xóa popover hiện có (nếu có) để tránh trùng lặp
-//       const existingPopover = document.querySelector(".popover");
-//       if (existingPopover) {
-//         existingPopover.remove();
-//       }
-
-//       // Tạo một bản sao của `#confirmDelete` để đảm bảo mỗi popover là độc lập
-//       const popoverContent = document
-//         .getElementById("confirmDelete")
-//         .cloneNode(true);
-//       popoverContent.classList.remove("d-none");
-//       popoverContent.id = ""; // Xóa ID để tránh xung đột ID khi có nhiều popover
-
-//       // Thêm popover content vào body
-//       document.body.appendChild(popoverContent);
-
-//       // Tạo popover cho nút "Xóa" được nhấn
-//       const popover = new bootstrap.Popover(button, {
-//         content: popoverContent,
-//         html: true,
-//         placement: "top",
-//         trigger: "manual",
-//       });
-
-//       popover.show();
-//       // Sự kiện khi nhấn nút "Hủy" để đóng popover
-//       popoverContent
-//         .querySelector(".cancel")
-//         .addEventListener("click", function () {
-//           popoverContent.remove(); // Xóa popover content khỏi DOM
-//           popover.dispose(); // Loại bỏ instance của popover
-//         });
-
-//       // Sự kiện khi nhấn nút "Có" để xử lý xóa (nếu cần)
-//       popoverContent
-//         .querySelector(".xoa-real")
-//         .addEventListener("click", function () {
-//           // Thực hiện hành động xóa (bạn có thể thêm logic xóa ở đây)
-//           popoverContent.remove(); // Xóa popover content khỏi DOM
-//           popover.dispose(); // Loại bỏ instance của popover
-//         });
-//     });
-//   });
-// }
 
 // // Khởi tạo các sự kiện khi nhấn nút xóa
 // attachDeleteListeners();
@@ -193,23 +144,19 @@ function attachDeleteListeners() {
 // Gọi hàm sau khi DOM tải xong
 document.addEventListener("DOMContentLoaded", attachDeleteListeners);
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   const deleteForms = document.querySelectorAll(
-//     "form[action='/delete-category']"
-//   );
+// hiển thị thông tin vào modal edit
+function openEditModal(id, name, description) {
+  document.getElementById("editUserId").value = id;
+  document.getElementById("nameEdit").value = name;
+  document.getElementById("desEdit").value = description;
+}
 
-//   deleteForms.forEach((form) => {
-//     form.addEventListener("submit", function (event) {
-//       event.preventDefault(); // Ngăn chặn gửi form ngay lập tức
-
-//       // Hiển thị hộp thoại xác nhận
-//       const confirmed = confirm(
-//         "Bạn có chắc chắn muốn xóa danh mục này không?"
-//       );
-
-//       if (confirmed) {
-//         form.submit(); // Gửi form nếu người dùng xác nhận
-//       }
-//     });
-//   });
-// });
+// Spinner
+var spinner = function () {
+  setTimeout(function () {
+    if ($("#spinner").length > 0) {
+      $("#spinner").removeClass("show");
+    }
+  }, 1);
+};
+spinner(0);

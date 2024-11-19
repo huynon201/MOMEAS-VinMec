@@ -5,6 +5,7 @@ const {
   checkUniqueId,
   deleteCategorary,
   checkCategoryUsedInProduct,
+  updateCategory,
 } = require("../services/CRUDService");
 const { displayProduct } = require("../services/CRUDProduct");
 const getHomePage = async (req, res) => {
@@ -12,11 +13,28 @@ const getHomePage = async (req, res) => {
   return res.render("home.ejs", { activePage: "home", listProduct: product });
 };
 
+// const getCategoraryPage = async (req, res) => {
+//   let categorary = await displayCategorary();
+//   return res.render("categorary.ejs", {
+//     activePage: "category",
+//     listcategori: categorary,
+//   });
+// };
 const getCategoraryPage = async (req, res) => {
-  let categorary = await displayCategorary();
+  const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
+  const limit = 10; // Số phần tử mỗi trang
+
+  // Gọi service để lấy dữ liệu
+  const { categories, totalItems } = await displayCategorary(page, limit);
+
+  const totalPages = Math.ceil(totalItems / limit); // Tính tổng số trang
+
+  // Render ra view
   return res.render("categorary.ejs", {
     activePage: "category",
-    listcategori: categorary,
+    listcategori: categories,
+    currentPage: page,
+    totalPages,
   });
 };
 const postCategorary = async (req, res) => {
@@ -37,10 +55,16 @@ const postDeleteCategorary = async (req, res) => {
   await deleteCategorary(id);
   res.redirect("/admin/categorary");
 };
-
+const postUpdateCategory = async (req, res) => {
+  const { editUserId, name, des } = req.body;
+  console.log(req.body);
+  await updateCategory(editUserId, name, des);
+  res.redirect("/admin/categorary");
+};
 module.exports = {
   getHomePage,
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
+  postUpdateCategory,
 };

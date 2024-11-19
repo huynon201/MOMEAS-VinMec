@@ -5,10 +5,10 @@ const userRouter = express.Router();
 
 const {
   getHomePage,
-  getHomePagee,
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
+  postUpdateCategory,
 } = require("../controllers/homeController");
 
 const {
@@ -23,6 +23,7 @@ adminRouter.get("/", getHomePage);
 adminRouter.get("/categorary", getCategoraryPage);
 adminRouter.post("/create-category", postCategorary);
 adminRouter.post("/delete-category", postDeleteCategorary);
+adminRouter.post("/update-category", postUpdateCategory);
 
 adminRouter.get("/product", getProductPage);
 adminRouter.post(

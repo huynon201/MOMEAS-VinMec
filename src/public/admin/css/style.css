@@ -11,6 +11,41 @@ body {
   min-height: 100vh;
   background: #eef5fe;
 }
+/* start load trang */
+#spinner {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-out, visibility 0s linear 0.5s;
+  z-index: 99999;
+}
+
+#spinner.show {
+  transition: opacity 0.8s ease-out, visibility 0s linear 0s;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Định dạng spinner */
+.spinner {
+  border: 4px solid #f3f3f3; /* Màu nền */
+  border-top: 4px solid #3498db; /* Màu của phần xoay */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.2s linear infinite; /* Quay liên tục */
+}
+
+/* Tạo hiệu ứng xoay vòng */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* end load trang */
 .flex {
   display: flex;
   align-items: center;
