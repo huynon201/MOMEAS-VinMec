@@ -85,7 +85,15 @@ sidebarOpenBtn.addEventListener("click", toggleSidebar);
 sidebarCloseBtn.addEventListener("click", toggleSidebar);
 
 handleResize();
-
+// Spinner
+var spinner = function () {
+  setTimeout(function () {
+    if ($("#spinner").length > 0) {
+      $("#spinner").removeClass("show");
+    }
+  }, 1);
+};
+spinner(0);
 // // Khởi tạo các sự kiện khi nhấn nút xóa
 // attachDeleteListeners();
 function attachDeleteListeners() {
@@ -94,10 +102,10 @@ function attachDeleteListeners() {
       event.preventDefault();
 
       // Xóa popover hiện có (nếu có) để tránh trùng lặp
-      const existingPopover = document.querySelector(".popover-content");
-      if (existingPopover) {
-        existingPopover.remove();
-      }
+      // const existingPopover = document.querySelector(".popover-content");
+      // if (existingPopover) {
+      //   existingPopover.remove();
+      // }
 
       // Lấy ID của danh mục từ nút xóa
       const categoryId = button.getAttribute("data-id");
@@ -144,19 +152,15 @@ function attachDeleteListeners() {
 // Gọi hàm sau khi DOM tải xong
 document.addEventListener("DOMContentLoaded", attachDeleteListeners);
 
-// hiển thị thông tin vào modal edit
+// hiển thị thông tin vào modal edit category
 function openEditModal(id, name, description) {
   document.getElementById("editUserId").value = id;
   document.getElementById("nameEdit").value = name;
   document.getElementById("desEdit").value = description;
 }
-
-// Spinner
-var spinner = function () {
-  setTimeout(function () {
-    if ($("#spinner").length > 0) {
-      $("#spinner").removeClass("show");
-    }
-  }, 1);
-};
-spinner(0);
+// hiển thị thông tin vào modal edit product
+function EditModalProduct(id, name, description) {
+  document.getElementById("editUserId").value = id;
+  document.getElementById("nameEdit").value = name;
+  document.getElementById("desEdit").value = description;
+}

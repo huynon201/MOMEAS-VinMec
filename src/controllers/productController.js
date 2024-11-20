@@ -13,6 +13,7 @@ const {
   createProducts,
   displayProduct,
   displayCategory,
+  deleteProduct,
 } = require("../services/CRUDProduct");
 
 const getProductPage = async (req, res) => {
@@ -41,10 +42,16 @@ const postCreateProduct = async (req, res) => {
     category,
     image
   );
-  res.redirect("/admin/product");
+  res.redirect("back");
+};
+const postDeleteProduct = async (req, res) => {
+  const id = req.body.id;
+  await deleteProduct(id);
+  res.redirect("back");
 };
 module.exports = {
   getProductPage,
   postCreateProduct,
   upload,
+  postDeleteProduct,
 };

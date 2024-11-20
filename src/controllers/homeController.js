@@ -48,18 +48,18 @@ const postCategorary = async (req, res) => {
   const create_at = new Date();
   console.log(create_at);
   await createCatrgory(id, name, des, create_at);
-  res.redirect("/admin/categorary");
+  res.redirect("back");
 };
 const postDeleteCategorary = async (req, res) => {
   const id = req.body.id;
   await deleteCategorary(id);
-  res.redirect("/admin/categorary");
+  res.redirect("back");
 };
 const postUpdateCategory = async (req, res) => {
   const { editUserId, name, des } = req.body;
-  console.log(req.body);
+  console.log(editUserId);
   await updateCategory(editUserId, name, des);
-  res.redirect("/admin/categorary");
+  res.redirect("back");
 };
 module.exports = {
   getHomePage,

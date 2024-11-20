@@ -25,8 +25,16 @@ const displayCategory = async (req, res) => {
   return result;
 };
 
+const deleteProduct = async (id) => {
+  let [result, fields] = await connection.query(
+    `DELETE FROM products WHERE id = ?`,
+    [id]
+  );
+};
+
 module.exports = {
   createProducts,
   displayProduct,
   displayCategory,
+  deleteProduct,
 };
