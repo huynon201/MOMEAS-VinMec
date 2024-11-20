@@ -53,6 +53,136 @@
             data-bs-target="#modal-tao">
             Tạo
           </button>
+          <!-- start modal tạo product-->
+          <div
+            class="modal fade"
+            id="modal-tao"
+            tabindex="-1"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div
+                  class="modal-header d-flex justify-content-center position-relative">
+                  <h4>Tạo Vật tư</h4>
+                  <button
+                    type="button"
+                    class="btn-close position-absolute end-0 me-3"
+                    data-bs-dismiss="modal"></button>
+                </div>
+                <form
+                  action="/admin/create-product"
+                  method="POST"
+                  enctype="multipart/form-data">
+                  <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                      <p>Tên vật tư</p>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Tên vật tư"
+                        name="name"
+                        required />
+                    </div>
+                    <div class="mb-3">
+                      <p>Mô tả</p>
+                      <textarea
+                        rows="4"
+                        class="form-control"
+                        name="des"
+                        required></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <p>Thương hiệu</p>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="brand"
+                        placeholder="Tên thương hiệu" />
+                    </div>
+                    <div class="mb-3">
+                      <p>Kích thước</p>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="size"
+                        placeholder="kích thước" />
+                    </div>
+                    <div class="mb-3">
+                      <p>Danh mục</p>
+                      <fieldset>
+                        <input
+                          id="categoryAdd"
+                          type="search"
+                          autocomplete="off"
+                          class="form-control"
+                          name="category"
+                          placeholder="Chọn danh mục"
+                          required />
+                        <ul id="suggestionAdd" class="suggestions">
+                          <% listCategories.forEach(function(category){%>
+                          <li><%= category.name %></li>
+                          <% }); %>
+                        </ul>
+                      </fieldset>
+                    </div>
+                    <div class="mb-3">
+                      <p>Màu sắc</p>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="color"
+                        placeholder="Màu sắc"
+                        required />
+                    </div>
+                    <div class="mb-3 mt-3">
+                      <p>Ảnh</p>
+                      <div class="upload-btn-wrapper">
+                        <div class="upload-wrapper plus">
+                          <i class="bx bx-plus" style="font-size: 24px"></i>
+                          <span>Tải ảnh lên</span>
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/*" />
+                        </div>
+                        <div class="upload-wrapper">
+                          <img
+                            style="display: none"
+                            id="avatarPreview"
+                            alt="avatar preview" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <p>Số lượng</p>
+                      <input
+                        class="form-control"
+                        name="quantity"
+                        placeholder="Số lượng"
+                        type="number"
+                        autocomplete="off"
+                        value="1"
+                        min="1" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-dismiss="modal">
+                      Hủy
+                    </button>
+                    <button type="submit" class="btn btn-info">Tạo</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- end modal tạo product-->
         </div>
         <div class="show-table">
           <div class="table-responsive-xl">
@@ -91,7 +221,7 @@
                     <button
                       class="btn btn-warning"
                       data-bs-toggle="modal"
-                      data-bs-target="#modalEdit<%= products.id %>">
+                      data-bs-target="#modalEdit">
                       Sửa
                     </button>
                     <button
@@ -135,7 +265,7 @@
                     </div>
                   </td>
                 </tr>
-                <div
+                <!-- <div
                   class="modal fade"
                   id="modalEdit<%= products.id %>"
                   tabindex="-1"
@@ -172,8 +302,9 @@
                               rows="4"
                               class="form-control"
                               name="des"
-                              value="<%= products.description %>"
-                              required></textarea>
+                              required>
+                            <%= products.description %>
+                            </textarea>
                           </div>
                           <div class="mb-3">
                             <p>Thương hiệu</p>
@@ -190,21 +321,21 @@
                               type="text"
                               class="form-control"
                               name="size"
-                              value="<%= products.color %>"
+                              value="<%= products.size %>"
                               placeholder="kích thước" />
                           </div>
                           <div class="mb-3">
                             <p>Danh mục</p>
                             <fieldset>
                               <input
-                                id="category"
+                                id="categoryEdit"
                                 type="search"
                                 autocomplete="off"
                                 class="form-control"
                                 name="category"
                                 placeholder="Chọn danh mục"
                                 required />
-                              <ul id="suggestions" class="suggestions">
+                              <ul id="suggestionEdit" class="suggestions">
                                 <% listCategories.forEach(function(category){%>
                                 <li><%= category.name %></li>
                                 <% }); %>
@@ -218,6 +349,7 @@
                               class="form-control"
                               name="color"
                               placeholder="Màu sắc"
+                              value="<%= products.color  %>"
                               required />
                           </div>
                           <div class="mb-3 mt-3">
@@ -252,7 +384,7 @@
                               placeholder="Số lượng"
                               type="number"
                               autocomplete="off"
-                              value="1"
+                              value="<%= products.quantity %>"
                               min="1" />
                           </div>
                         </div>
@@ -270,7 +402,7 @@
                       </form>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <% }) %>
               </tbody>
             </table>
@@ -278,140 +410,11 @@
         </div>
       </div>
     </div>
-    <!-- start modal tạo product-->
-    <div
-      class="modal fade"
-      id="modal-tao"
-      tabindex="-1"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div
-            class="modal-header d-flex justify-content-center position-relative">
-            <h4>Tạo Vật tư</h4>
-            <button
-              type="button"
-              class="btn-close position-absolute end-0 me-3"
-              data-bs-dismiss="modal"></button>
-          </div>
-          <form
-            action="/admin/create-product"
-            method="POST"
-            enctype="multipart/form-data">
-            <div class="modal-body">
-              <div class="mb-3 mt-3">
-                <p>Tên vật tư</p>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Tên vật tư"
-                  name="name"
-                  required />
-              </div>
-              <div class="mb-3">
-                <p>Mô tả</p>
-                <textarea
-                  rows="4"
-                  class="form-control"
-                  name="des"
-                  required></textarea>
-              </div>
-              <div class="mb-3">
-                <p>Thương hiệu</p>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="brand"
-                  placeholder="Tên thương hiệu" />
-              </div>
-              <div class="mb-3">
-                <p>Kích thước</p>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="size"
-                  placeholder="kích thước" />
-              </div>
-              <div class="mb-3">
-                <p>Danh mục</p>
-                <fieldset>
-                  <input
-                    id="category"
-                    type="search"
-                    autocomplete="off"
-                    class="form-control"
-                    name="category"
-                    placeholder="Chọn danh mục"
-                    required />
-                  <ul id="suggestions" class="suggestions">
-                    <% listCategories.forEach(function(category){%>
-                    <li><%= category.name %></li>
-                    <% }); %>
-                  </ul>
-                </fieldset>
-              </div>
-              <div class="mb-3">
-                <p>Màu sắc</p>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="color"
-                  placeholder="Màu sắc"
-                  required />
-              </div>
-              <div class="mb-3 mt-3">
-                <p>Ảnh</p>
-                <div class="upload-btn-wrapper">
-                  <div class="upload-wrapper plus">
-                    <i class="bx bx-plus" style="font-size: 24px"></i>
-                    <span>Tải ảnh lên</span>
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="image"
-                      name="image"
-                      accept="image/*" />
-                  </div>
-                  <div class="upload-wrapper">
-                    <img
-                      style="display: none"
-                      id="avatarPreview"
-                      alt="avatar preview" />
-                  </div>
-                </div>
-              </div>
 
-              <div class="mb-3">
-                <p>Số lượng</p>
-                <input
-                  class="form-control"
-                  name="quantity"
-                  placeholder="Số lượng"
-                  type="number"
-                  autocomplete="off"
-                  value="1"
-                  min="1" />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal">
-                Hủy
-              </button>
-              <button type="submit" class="btn btn-info">Tạo</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- end modal tạo product-->
     <!-- start modal edit product-->
     <div
       class="modal fade"
-      id="modalEdit<%=  %>"
+      id="modalEdit"
       tabindex="-1"
       data-bs-backdrop="static"
       data-bs-keyboard="false">
@@ -426,7 +429,7 @@
               data-bs-dismiss="modal"></button>
           </div>
           <form
-            action="/admin/create-product"
+            action="/admin/update-product"
             method="POST"
             enctype="multipart/form-data">
             <div class="modal-body">
@@ -437,6 +440,7 @@
                   class="form-control"
                   placeholder="Tên vật tư"
                   name="name"
+                  value=""
                   required />
               </div>
               <div class="mb-3">
@@ -453,6 +457,7 @@
                   type="text"
                   class="form-control"
                   name="brand"
+                  value=""
                   placeholder="Tên thương hiệu" />
               </div>
               <div class="mb-3">
@@ -461,20 +466,21 @@
                   type="text"
                   class="form-control"
                   name="size"
+                  value=""
                   placeholder="kích thước" />
               </div>
               <div class="mb-3">
                 <p>Danh mục</p>
                 <fieldset>
                   <input
-                    id="category"
+                    id="categoryEdit"
                     type="search"
                     autocomplete="off"
                     class="form-control"
                     name="category"
                     placeholder="Chọn danh mục"
                     required />
-                  <ul id="suggestions" class="suggestions">
+                  <ul id="suggestionEdit" class="suggestions">
                     <% listCategories.forEach(function(category){%>
                     <li><%= category.name %></li>
                     <% }); %>
@@ -488,6 +494,7 @@
                   class="form-control"
                   name="color"
                   placeholder="Màu sắc"
+                  value=""
                   required />
               </div>
               <div class="mb-3 mt-3">
@@ -520,7 +527,7 @@
                   placeholder="Số lượng"
                   type="number"
                   autocomplete="off"
-                  value="1"
+                  value=""
                   min="1" />
               </div>
             </div>
