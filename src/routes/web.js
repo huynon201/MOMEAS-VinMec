@@ -16,6 +16,7 @@ const {
   postCreateProduct,
   upload,
   postDeleteProduct,
+  postUpdateProduct,
 } = require("../controllers/productController");
 const { login, getLoginPage } = require("../controllers/authController");
 
@@ -28,6 +29,15 @@ adminRouter.post("/update-category", postUpdateCategory);
 
 adminRouter.get("/product", getProductPage);
 adminRouter.post("/delete-product", postDeleteProduct);
+adminRouter.post(
+  "/update-product",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "quantity", maxCount: 1 },
+  ]),
+  postUpdateProduct
+);
+
 adminRouter.post(
   "/create-product",
   upload.fields([

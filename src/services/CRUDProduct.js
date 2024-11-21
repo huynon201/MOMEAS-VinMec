@@ -31,10 +31,26 @@ const deleteProduct = async (id) => {
     [id]
   );
 };
-
+const updateProduct = async (
+  id,
+  name,
+  des,
+  brand,
+  size,
+  category,
+  color,
+  image,
+  quantity
+) => {
+  let [result, fields] = await connection.query(
+    `UPDATE products SET name = ?, description = ?, quantity = ?, brand = ?, color = ?, size = ?, image = ?, category_name = ? WHERE id = ?`,
+    [name, des, quantity, brand, color, size, image, category, id]
+  );
+};
 module.exports = {
   createProducts,
   displayProduct,
   displayCategory,
   deleteProduct,
+  updateProduct,
 };

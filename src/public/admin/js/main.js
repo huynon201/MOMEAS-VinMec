@@ -159,8 +159,25 @@ function openEditModal(id, name, description) {
   document.getElementById("desEdit").value = description;
 }
 // hiển thị thông tin vào modal edit product
-function EditModalProduct(id, name, description) {
-  document.getElementById("editUserId").value = id;
+function EditModalProduct(
+  id,
+  name,
+  description,
+  quantity,
+  brand,
+  color,
+  size,
+  category_name,
+  image
+) {
+  const basePath = "/assets/content/upload/";
+  document.getElementById("editProductId").value = id;
   document.getElementById("nameEdit").value = name;
   document.getElementById("desEdit").value = description;
+  document.getElementById("brandEdit").value = brand;
+  document.getElementById("sizeEdit").value = size;
+  document.getElementById("categoryEdit").value = category_name;
+  document.getElementById("colorEdit").value = color;
+  document.getElementById("quantityEdit").value = quantity;
+  document.getElementById("avatarPreviewEdit").src = basePath + image;
 }

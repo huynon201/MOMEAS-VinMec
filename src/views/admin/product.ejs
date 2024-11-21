@@ -152,7 +152,8 @@
                           <img
                             style="display: none"
                             id="avatarPreview"
-                            alt="avatar preview" />
+                            alt="avatar preview"
+                            src="" />
                         </div>
                       </div>
                     </div>
@@ -221,7 +222,8 @@
                     <button
                       class="btn btn-warning"
                       data-bs-toggle="modal"
-                      data-bs-target="#modalEdit">
+                      data-bs-target="#modalEdit"
+                      onclick="EditModalProduct('<%= products.id %>', '<%= products.name %>', '<%= products.description %>','<%= products.quantity %>', '<%= products.brand %>', '<%= products.color %>','<%= products.size %>', '<%= products.category_name %>', '<%= products.image %>')">
                       Sửa
                     </button>
                     <button
@@ -265,144 +267,7 @@
                     </div>
                   </td>
                 </tr>
-                <!-- <div
-                  class="modal fade"
-                  id="modalEdit<%= products.id %>"
-                  tabindex="-1"
-                  data-bs-backdrop="static"
-                  data-bs-keyboard="false">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div
-                        class="modal-header d-flex justify-content-center position-relative">
-                        <h4>Chỉnh sửa vật tư</h4>
-                        <button
-                          type="button"
-                          class="btn-close position-absolute end-0 me-3"
-                          data-bs-dismiss="modal"></button>
-                      </div>
-                      <form
-                        action="/admin/update-product"
-                        method="POST"
-                        enctype="multipart/form-data">
-                        <div class="modal-body">
-                          <div class="mb-3 mt-3">
-                            <p>Tên vật tư</p>
-                            <input
-                              type="text"
-                              class="form-control"
-                              placeholder="Tên vật tư"
-                              name="name"
-                              value="<%= products.name%>"
-                              required />
-                          </div>
-                          <div class="mb-3">
-                            <p>Mô tả</p>
-                            <textarea
-                              rows="4"
-                              class="form-control"
-                              name="des"
-                              required>
-                            <%= products.description %>
-                            </textarea>
-                          </div>
-                          <div class="mb-3">
-                            <p>Thương hiệu</p>
-                            <input
-                              type="text"
-                              class="form-control"
-                              name="brand"
-                              value="<%= products.brand %>"
-                              placeholder="Tên thương hiệu" />
-                          </div>
-                          <div class="mb-3">
-                            <p>Kích thước</p>
-                            <input
-                              type="text"
-                              class="form-control"
-                              name="size"
-                              value="<%= products.size %>"
-                              placeholder="kích thước" />
-                          </div>
-                          <div class="mb-3">
-                            <p>Danh mục</p>
-                            <fieldset>
-                              <input
-                                id="categoryEdit"
-                                type="search"
-                                autocomplete="off"
-                                class="form-control"
-                                name="category"
-                                placeholder="Chọn danh mục"
-                                required />
-                              <ul id="suggestionEdit" class="suggestions">
-                                <% listCategories.forEach(function(category){%>
-                                <li><%= category.name %></li>
-                                <% }); %>
-                              </ul>
-                            </fieldset>
-                          </div>
-                          <div class="mb-3">
-                            <p>Màu sắc</p>
-                            <input
-                              type="text"
-                              class="form-control"
-                              name="color"
-                              placeholder="Màu sắc"
-                              value="<%= products.color  %>"
-                              required />
-                          </div>
-                          <div class="mb-3 mt-3">
-                            <p>Ảnh</p>
-                            <div class="upload-btn-wrapper">
-                              <div class="upload-wrapper plus">
-                                <i
-                                  class="bx bx-plus"
-                                  style="font-size: 24px"></i>
-                                <span>Tải ảnh lên</span>
-                                <input
-                                  class="form-control"
-                                  type="file"
-                                  id="image"
-                                  name="image"
-                                  accept="image/*" />
-                              </div>
-                              <div class="upload-wrapper">
-                                <img
-                                  style="display: none"
-                                  id="avatarPreview"
-                                  alt="avatar preview" />
-                              </div>
-                            </div>
-                          </div>
 
-                          <div class="mb-3">
-                            <p>Số lượng</p>
-                            <input
-                              class="form-control"
-                              name="quantity"
-                              placeholder="Số lượng"
-                              type="number"
-                              autocomplete="off"
-                              value="<%= products.quantity %>"
-                              min="1" />
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-danger"
-                            data-bs-dismiss="modal">
-                            Hủy
-                          </button>
-                          <button type="submit" class="btn btn-info">
-                            Tạo
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div> -->
                 <% }) %>
               </tbody>
             </table>
@@ -433,6 +298,7 @@
             method="POST"
             enctype="multipart/form-data">
             <div class="modal-body">
+              <input type="hidden" id="editProductId" name="editProductId" />
               <div class="mb-3 mt-3">
                 <p>Tên vật tư</p>
                 <input
@@ -440,7 +306,7 @@
                   class="form-control"
                   placeholder="Tên vật tư"
                   name="name"
-                  value=""
+                  id="nameEdit"
                   required />
               </div>
               <div class="mb-3">
@@ -449,6 +315,7 @@
                   rows="4"
                   class="form-control"
                   name="des"
+                  id="desEdit"
                   required></textarea>
               </div>
               <div class="mb-3">
@@ -457,7 +324,7 @@
                   type="text"
                   class="form-control"
                   name="brand"
-                  value=""
+                  id="brandEdit"
                   placeholder="Tên thương hiệu" />
               </div>
               <div class="mb-3">
@@ -466,7 +333,7 @@
                   type="text"
                   class="form-control"
                   name="size"
-                  value=""
+                  id="sizeEdit"
                   placeholder="kích thước" />
               </div>
               <div class="mb-3">
@@ -493,6 +360,7 @@
                   type="text"
                   class="form-control"
                   name="color"
+                  id="colorEdit"
                   placeholder="Màu sắc"
                   value=""
                   required />
@@ -506,14 +374,15 @@
                     <input
                       class="form-control"
                       type="file"
-                      id="image"
+                      id="imageEdit"
                       name="image"
                       accept="image/*" />
                   </div>
                   <div class="upload-wrapper">
                     <img
                       style="display: none"
-                      id="avatarPreview"
+                      id="avatarPreviewEdit"
+                      src="/assets/content/upload/"
                       alt="avatar preview" />
                   </div>
                 </div>
@@ -524,11 +393,12 @@
                 <input
                   class="form-control"
                   name="quantity"
+                  id="quantityEdit"
                   placeholder="Số lượng"
                   type="number"
                   autocomplete="off"
                   value=""
-                  min="1" />
+                  min="0" />
               </div>
             </div>
             <div class="modal-footer">
@@ -548,12 +418,38 @@
   </body>
   <script>
     $(document).ready(() => {
-      const avatarFile = $("#image");
+      const avatarFile = $("#image"); // Input file chính
+      const avatarFileEdit = $("#imageEdit"); // Input file trong modal Edit
+      let lastSelectedImage = null; // Lưu file ảnh đã chọn
+
+      // Khi người dùng chọn ảnh (input chính)
       avatarFile.change(function (e) {
-        const imgURL = URL.createObjectURL(e.target.files[0]);
+        lastSelectedImage = e.target.files[0]; // Lưu file ảnh được chọn
+        const imgURL = URL.createObjectURL(lastSelectedImage);
         $("#avatarPreview").attr("src", imgURL);
         $("#avatarPreview").css({ display: "block" });
       });
+
+      // Khi người dùng chọn ảnh (trong modal Edit)
+      const avatarPreviewEdit = $("#avatarPreviewEdit");
+
+      avatarFileEdit.change(function (e) {
+        lastSelectedImage = e.target.files[0]; // Cập nhật file ảnh trong modal Edit
+        const imgURL = URL.createObjectURL(lastSelectedImage);
+        avatarPreviewEdit.attr("src", imgURL);
+        avatarPreviewEdit.css({ display: "block" });
+      });
+
+      // Theo dõi khi modal mở (body có class modal-open)
+      const body = $("body");
+
+      $("#modalEdit").on("shown.bs.modal", function () {
+        if (body.hasClass("modal-open")) {
+          if (avatarPreviewEdit.css("display") === "none") {
+            avatarPreviewEdit.css({ display: "block" });
+          }
+        }
+      }); // Kiểm tra mỗi 100ms
     });
   </script>
 </html>

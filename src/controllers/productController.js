@@ -14,6 +14,7 @@ const {
   displayProduct,
   displayCategory,
   deleteProduct,
+  updateProduct,
 } = require("../services/CRUDProduct");
 
 const getProductPage = async (req, res) => {
@@ -49,9 +50,28 @@ const postDeleteProduct = async (req, res) => {
   await deleteProduct(id);
   res.redirect("back");
 };
+const postUpdateProduct = async (req, res) => {
+  const image = req.files.image[0].filename;
+  const { editProductId, name, des, brand, size, category, color, quantity } =
+    req.body;
+  console.log(req.body.quantity);
+  await updateProduct(
+    editProductId,
+    name,
+    des,
+    brand,
+    size,
+    category,
+    color,
+    image,
+    quantity
+  );
+  res.redirect("back");
+};
 module.exports = {
   getProductPage,
   postCreateProduct,
   upload,
   postDeleteProduct,
+  postUpdateProduct,
 };

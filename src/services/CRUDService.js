@@ -8,6 +8,8 @@ const connection = require("../configs/database");
 //   );
 //   return results;
 // };
+
+// phân trang
 const displayCategorary = async (page, limit) => {
   const offset = (page - 1) * limit; // Tính vị trí bắt đầu
 
