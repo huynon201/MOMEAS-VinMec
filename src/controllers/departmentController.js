@@ -1,0 +1,37 @@
+const {
+  displayDepartment,
+  createDepartment,
+  checkUniqueId,
+} = require("../services/CRUDDepartment");
+const { generateRandomId } = require("../untils/randomUntils");
+const { formatDate } = require("../untils/timeZone");
+const getDepartmentPage = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = 10;
+
+  const { department, totalItems } = await displayDepartment(page, limit);
+  const totalPages = Math.ceil(totalItems / limit);
+  return res.render("department.ejs", {
+    activePage: "department",
+    listdepartment: department,
+    currentPage: page,
+    totalPages,
+  });
+};
+const postCreateDepartment = async (req, res) => {
+  let id;
+  let isUnique = false;
+  while (!isUnique) {
+    id = generateRandomId();
+    isUnique = await checkUniqueId(id);
+  }
+  const { name, des } = req.body;
+  const create_at = new Date();
+  console.log(create_at);
+  await createDepartment(id, name, des, create_at);
+  res.redirect("back");
+};
+module.exports = {
+  getDepartmentPage,
+  postCreateDepartment,
+};

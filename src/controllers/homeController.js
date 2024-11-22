@@ -1,4 +1,5 @@
 const { generateRandomId } = require("../untils/randomUntils");
+const { formatDate } = require("../untils/timeZone");
 const {
   displayCategorary,
   createCatrgory,
@@ -48,8 +49,8 @@ const postCategorary = async (req, res) => {
     isUnique = await checkUniqueId(id);
   }
   const { name, des } = req.body;
+
   const create_at = new Date();
-  console.log(create_at);
   await createCatrgory(id, name, des, create_at);
   res.redirect("back");
 };

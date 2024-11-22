@@ -19,6 +19,11 @@ const {
   postUpdateProduct,
 } = require("../controllers/productController");
 const { login, getLoginPage } = require("../controllers/authController");
+// deparmentcontroller
+const {
+  getDepartmentPage,
+  postCreateDepartment,
+} = require("../controllers/departmentController");
 
 adminRouter.get("/", getHomePage);
 
@@ -46,6 +51,9 @@ adminRouter.post(
   ]),
   postCreateProduct
 );
+
+adminRouter.get("/departments", getDepartmentPage);
+adminRouter.post("/create-department", postCreateDepartment);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);

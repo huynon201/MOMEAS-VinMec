@@ -9,6 +9,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 const { generateRandomId } = require("../untils/randomUntils");
+const { formatDate } = require("../untils/timeZone");
 const {
   createProducts,
   displayProduct,
@@ -20,7 +21,6 @@ const {
 
 const getProductPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
-  console.log(">>>>>", page);
   const limit = 10; // Số phần tử mỗi trang
   let { products, totalItems } = await displayProduct(page, limit);
   const totalPages = Math.ceil(totalItems / limit);
