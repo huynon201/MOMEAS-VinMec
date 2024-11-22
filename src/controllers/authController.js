@@ -12,7 +12,7 @@ const login = async (req, res) => {
       const token = jwt.sign(
         { name: user.name, role: user.role_id },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "2h" }
       );
 
       res.cookie("token", token, {

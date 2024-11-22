@@ -1,9 +1,31 @@
 const connection = require("../configs/database");
-const displayProduct = async () => {
-  let [results, fields] = await connection.query(`SELECT * FROM products`);
-  return results;
+const displayProduct = async (page, limit) => {
+  const offset = (page - 1) * limit; // Tính vị trí bắt đầu
+
+  // Đếm tổng số danh mục
+  const [countResult] = await connection.query(
+    "SELECT COUNT(*) AS total FROM products"
+  );
+  const totalItems = countResult[0].total;
+  let [results, fields] = await connection.query(
+    `SELECT * FROM products ORDER BY created_at ASC LIMIT ? OFFSET ?`,
+    [limit, offset]
+  );
+
+  return {
+    products: results,
+    totalItems,
+  };
+};
+const checkUniqueId = async (id) => {
+  const [rows] = await connection.query(
+    "SELECT COUNT(*) AS count FROM products WHERE id = ?",
+    [id]
+  );
+  return rows[0].count === 0; // Trả về true nếu id là duy nhất
 };
 const createProducts = async (
+  id,
   name,
   des,
   quantity,
@@ -11,12 +33,13 @@ const createProducts = async (
   color,
   size,
   image,
-  category
+  category,
+  create_at
 ) => {
   let [result, fields] = await connection.query(
-    `INSERT INTO products (name, description, quantity, brand, color, size , category_name, image)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    [name, des, quantity, brand, color, size, image, category]
+    `INSERT INTO products (id, name, description, quantity, brand, color, size , category_name, image)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [id, name, des, quantity, brand, color, size, image, category, create_at]
   );
 };
 
@@ -49,6 +72,7 @@ const updateProduct = async (
 };
 module.exports = {
   createProducts,
+  checkUniqueId,
   displayProduct,
   displayCategory,
   deleteProduct,

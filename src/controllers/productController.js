@@ -8,32 +8,43 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
-
+const { generateRandomId } = require("../untils/randomUntils");
 const {
   createProducts,
   displayProduct,
   displayCategory,
   deleteProduct,
   updateProduct,
+  checkUniqueId,
 } = require("../services/CRUDProduct");
 
 const getProductPage = async (req, res) => {
-  let product = await displayProduct();
-  let img = await displayProduct();
+  const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
+  const limit = 10; // Số phần tử mỗi trang
+  let { products, totalItems } = await displayProduct(page, limit);
+  const totalPages = Math.ceil(totalItems / limit);
   let category = await displayCategory();
   return res.render("product.ejs", {
     activePage: "product",
-    listProduct: product,
-    lastImg: img,
+    listProduct: products,
     listCategories: category,
+    currentPage: page,
+    totalPages,
   });
 };
 const postCreateProduct = async (req, res) => {
+  let id;
+  let isUnique = false;
+  while (!isUnique) {
+    id = generateRandomId();
+    isUnique = await checkUniqueId(id);
+  }
   const image = req.files.image[0].filename;
-
+  const create_at = new Date();
   const { name, des, quantity, brand, color, size, category } = req.body;
   const parsedQuantity = parseInt(quantity);
   await createProducts(
+    id,
     name,
     des,
     parsedQuantity,
@@ -41,7 +52,8 @@ const postCreateProduct = async (req, res) => {
     color,
     size,
     category,
-    image
+    image,
+    create_at
   );
   res.redirect("back");
 };
@@ -54,7 +66,7 @@ const postUpdateProduct = async (req, res) => {
   const image = req.files.image[0].filename;
   const { editProductId, name, des, brand, size, category, color, quantity } =
     req.body;
-  console.log(req.body.quantity);
+
   await updateProduct(
     editProductId,
     name,

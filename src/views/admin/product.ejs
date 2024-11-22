@@ -146,7 +146,8 @@
                             type="file"
                             id="image"
                             name="image"
-                            accept="image/*" />
+                            accept="image/*"
+                            required />
                         </div>
                         <div class="upload-wrapper">
                           <img
@@ -273,6 +274,9 @@
             </table>
           </div>
         </div>
+        <!-- start phân trang -->
+        <%- include("./layout/pagination") %>
+        <!-- end phân trang -->
       </div>
     </div>
 

@@ -8,6 +8,7 @@ const {
   updateCategory,
 } = require("../services/CRUDService");
 const { displayProduct } = require("../services/CRUDProduct");
+
 const getHomePage = async (req, res) => {
   let product = await displayProduct();
   return res.render("home.ejs", { activePage: "home", listProduct: product });
