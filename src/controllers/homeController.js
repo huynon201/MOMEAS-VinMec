@@ -10,17 +10,19 @@ const {
 const { displayProduct } = require("../services/CRUDProduct");
 
 const getHomePage = async (req, res) => {
-  let product = await displayProduct();
-  return res.render("home.ejs", { activePage: "home", listProduct: product });
+  const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
+  const limit = 8; // Số phần tử mỗi trang
+
+  let { products, totalItems } = await displayProduct(page, limit);
+  const totalPages = Math.ceil(totalItems / limit);
+  return res.render("home.ejs", {
+    activePage: "home",
+    listProduct: products,
+    currentPage: page,
+    totalPages,
+  });
 };
 
-// const getCategoraryPage = async (req, res) => {
-//   let categorary = await displayCategorary();
-//   return res.render("categorary.ejs", {
-//     activePage: "category",
-//     listcategori: categorary,
-//   });
-// };
 const getCategoraryPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
   const limit = 10; // Số phần tử mỗi trang

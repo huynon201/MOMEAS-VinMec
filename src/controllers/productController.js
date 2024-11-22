@@ -20,6 +20,7 @@ const {
 
 const getProductPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
+  console.log(">>>>>", page);
   const limit = 10; // Số phần tử mỗi trang
   let { products, totalItems } = await displayProduct(page, limit);
   const totalPages = Math.ceil(totalItems / limit);

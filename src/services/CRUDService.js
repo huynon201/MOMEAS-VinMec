@@ -1,14 +1,5 @@
 const connection = require("../configs/database");
 
-// category-feature
-
-// const displayCategorary = async (req, res) => {
-//   let [results, fields] = await connection.query(
-//     `SELECT * FROM categories ORDER BY created_at ASC`
-//   );
-//   return results;
-// };
-
 // phân trang
 const displayCategorary = async (page, limit) => {
   const offset = (page - 1) * limit; // Tính vị trí bắt đầu
