@@ -38,6 +38,6 @@ function initializeAutocomplete(inputId, suggestionsId, fieldsetSelector) {
     }
   });
 }
-initializeAutocomplete("categoryAdd", "suggestionAdd", "fieldset");
+initializeAutocomplete("modalAdd", "suggestionAdd", "fieldset");
 
-initializeAutocomplete("categoryEdit", "suggestionEdit", "fieldset");
+initializeAutocomplete("modalEditE", "suggestionEdit", "fieldset");

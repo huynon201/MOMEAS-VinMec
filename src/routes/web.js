@@ -28,6 +28,14 @@ const {
   postUpdateDepartment,
 } = require("../controllers/departmentController");
 
+// employeeController
+const {
+  getemployeePage,
+  postCreateEmployee,
+  postDeleteEmployee,
+  postUpdateEmployee,
+} = require("../controllers/employeeController");
+
 adminRouter.get("/", getHomePage);
 
 adminRouter.get("/categorary", getCategoraryPage);
@@ -59,6 +67,11 @@ adminRouter.get("/departments", getDepartmentPage);
 adminRouter.post("/create-department", postCreateDepartment);
 adminRouter.post("/delete-department", postDeleteDepartment);
 adminRouter.post("/update-department", postUpdateDepartment);
+
+adminRouter.get("/employee", getemployeePage);
+adminRouter.post("/create-employee", postCreateEmployee);
+adminRouter.post("/delete-employee", postDeleteEmployee);
+adminRouter.post("/update-employee", postUpdateEmployee);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
