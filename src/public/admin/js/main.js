@@ -101,12 +101,6 @@ function attachDeleteListeners() {
     button.addEventListener("click", function (event) {
       event.preventDefault();
 
-      // Xóa popover hiện có (nếu có) để tránh trùng lặp
-      // const existingPopover = document.querySelector(".popover-content");
-      // if (existingPopover) {
-      //   existingPopover.remove();
-      // }
-
       // Lấy ID của danh mục từ nút xóa
       const categoryId = button.getAttribute("data-id");
       const popoverContent = document
@@ -176,7 +170,7 @@ function EditModalProduct(
   document.getElementById("desEdit").value = description;
   document.getElementById("brandEdit").value = brand;
   document.getElementById("sizeEdit").value = size;
-  document.getElementById("categoryEdit").value = category_name;
+  document.getElementById("modalEditElement").value = category_name;
   document.getElementById("colorEdit").value = color;
   document.getElementById("quantityEdit").value = quantity;
   document.getElementById("avatarPreviewEdit").src = basePath + image;
@@ -184,7 +178,7 @@ function EditModalProduct(
 function openEditEmployee(id, name, department, role, phone, address) {
   document.getElementById("editemployeeId").value = id;
   document.getElementById("nameEdit").value = name;
-  document.getElementById("modalEditE").value = department;
+  document.getElementById("modalEditElement").value = department;
   document.getElementById("regencyEdit").value = role;
   document.getElementById("phoneNumberEdit").value = phone;
   document.getElementById("addressEdit").value = address;

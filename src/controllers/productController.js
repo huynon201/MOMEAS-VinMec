@@ -67,7 +67,6 @@ const postUpdateProduct = async (req, res) => {
   const image = req.files.image[0].filename;
   const { editProductId, name, des, brand, size, category, color, quantity } =
     req.body;
-  console.log(req.body);
   await updateProduct(
     editProductId,
     name,

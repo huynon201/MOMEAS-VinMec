@@ -40,4 +40,4 @@ function initializeAutocomplete(inputId, suggestionsId, fieldsetSelector) {
 }
 initializeAutocomplete("modalAdd", "suggestionAdd", "fieldset");
 
-initializeAutocomplete("modalEditE", "suggestionEdit", "fieldset");
+initializeAutocomplete("modalEditElement", "suggestionEdit", "fieldset");
