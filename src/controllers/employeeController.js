@@ -51,7 +51,6 @@ const postDeleteEmployee = async (req, res) => {
 const postUpdateEmployee = async (req, res) => {
   const { editemployeeId, name, department, regency, phoneNumber, address } =
     req.body;
-  console.log(req.body);
   await updateEmployee(
     editemployeeId,
     name,
