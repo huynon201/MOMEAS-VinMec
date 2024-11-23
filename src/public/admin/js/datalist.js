@@ -1,8 +1,6 @@
-function initializeAutocomplete(inputId, suggestionsId, fieldsetSelector) {
+function initializeAutocomplete(inputId, suggestionsId) {
   const input = document.getElementById(inputId);
-
   const suggestions = document.getElementById(suggestionsId);
-  const fieldset = document.querySelectorAll(fieldsetSelector);
 
   input.onfocus = function () {
     suggestions.style.display = "block";
@@ -33,11 +31,13 @@ function initializeAutocomplete(inputId, suggestionsId, fieldsetSelector) {
 
   // Đóng danh sách khi nhấp ra ngoài
   document.addEventListener("click", function (e) {
-    if (!fieldset.contains(e.target)) {
+    const fieldset = input.closest("fieldset"); // Tìm fieldset gần nhất với input
+    if (fieldset && !fieldset.contains(e.target)) {
       suggestions.style.display = "none";
     }
   });
 }
-initializeAutocomplete("modalAdd", "suggestionAdd", "fieldset");
 
-initializeAutocomplete("modalEditElement", "suggestionEdit", "fieldset");
+// Khởi tạo autocomplete cho các trường modal
+initializeAutocomplete("modalAdd", "suggestionAdd");
+initializeAutocomplete("modalEditElement", "suggestionEdit");

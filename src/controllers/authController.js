@@ -18,7 +18,7 @@ const login = async (req, res) => {
       res.cookie("token", token, {
         httpOnly: true,
         secure: false,
-        maxAge: 3600000,
+        maxAge: 7200000,
       });
 
       if (user.role_id === 1) {
