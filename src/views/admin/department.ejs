@@ -49,47 +49,82 @@
             data-bs-target="#myModal">
             Tạo
           </button>
-          <div class="table-list">
-            <table class="table-danh-muc table table-hover">
-              <thead>
-                <tr>
-                  <th>STT</th>
-                  <th>ID</th>
-                  <th>Tên phòng ban</th>
-                  <th style="width: 45%">Mô tả</th>
-                  <th>Hành động</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% listdepartment.forEach(function(department, index) { %>
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= department.id %></td>
-                  <td><%= department.name %></td>
-                  <td><%= department.description %></td>
-                  <td>
-                    <button
-                      class="btn btn-warning"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modalEdit"
-                      onclick="openEditModal('<%= department.id %>', '<%= department.name %>', '<%= department.description %>')">
-                      Sửa
-                    </button>
-                    <button
-                      class="btn btn-danger xoa"
-                      data-id="<%= department.id %>">
-                      Xóa
-                    </button>
-                  </td>
-                </tr>
-                <%});%>
-              </tbody>
-            </table>
-            <%- include("./layout/pagination") %>
-          </div>
+        </div>
+        <div class="table-list">
+          <table class="table-danh-muc table table-hover">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Tên phòng ban</th>
+                <th style="width: 45%">Mô tả</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% listdepartment.forEach(function(department, index) { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= department.id %></td>
+                <td><%= department.name %></td>
+                <td><%= department.description %></td>
+                <td>
+                  <button
+                    class="btn btn-warning"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalEdit"
+                    onclick="openEditModal('<%= department.id %>', '<%= department.name %>', '<%= department.description %>')">
+                    Sửa
+                  </button>
+                  <button
+                    class="btn btn-danger xoa"
+                    data-id="<%= department.id %>">
+                    Xóa
+                  </button>
+                  <div
+                    id="confirmDelete-<%= department.id %>"
+                    class="popover-content d-none">
+                    <div class="popover-heading">
+                      <i
+                        style="
+                          color: orange;
+                          font-size: 20px;
+                          margin-right: 5px;
+                        "
+                        class="bx bxs-error bx-flashing"></i>
+                      <span>Bạn có muốn xóa không?</span>
+                    </div>
+                    <div class="popover-body">
+                      <button class="btn btn-outline-primary btn-sm cancel">
+                        Hủy
+                      </button>
+                      <form
+                        action="/admin/delete-department"
+                        method="POST"
+                        style="display: inline">
+                        <input
+                          type="hidden"
+                          name="id"
+                          value="<%= department.id %>" />
+                        <button
+                          type="submit"
+                          class="btn btn-outline-danger btn-sm">
+                          Có
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <%});%>
+            </tbody>
+          </table>
+          <%- include("./layout/pagination") %>
         </div>
       </div>
     </div>
+
+    <!-- start modal tạo phòng ban -->
     <div
       class="modal fade"
       id="myModal"
@@ -141,5 +176,62 @@
         </div>
       </div>
     </div>
+    <!-- end modal tạo phòng ban -->
+
+    <!-- start modal sửa phòng ban -->
+    <div
+      class="modal fade"
+      id="modalEdit"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalTitleId"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header d-flex justify-content-center position-relative">
+            <h4 class="modal-title" id="modalTitleId">Sửa phòng ban</h4>
+            <button
+              type="button"
+              class="btn-close position-absolute end-0 me-3"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <form action="/admin/update-department" method="POST">
+            <div class="modal-body">
+              <input type="hidden" id="editUserId" name="editUserId" />
+              <div class="mb-3 mt-3">
+                <p>Tên phòng ban:</p>
+                <input
+                  type="text"
+                  id="nameEdit"
+                  class="form-control"
+                  placeholder="Tên phòng ban"
+                  name="name"
+                  required />
+              </div>
+              <p class="mt-3">Mô tả</p>
+              <textarea
+                rows="4"
+                class="form-control"
+                id="desEdit"
+                placeholder="Mô tả"
+                name="des"
+                required></textarea>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal">
+                Hủy
+              </button>
+              <button type="submit" class="btn btn-info">Lưu</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- end modal sửa phòng ban -->
   </body>
 </html>

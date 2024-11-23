@@ -18,11 +18,14 @@ const {
   postDeleteProduct,
   postUpdateProduct,
 } = require("../controllers/productController");
+
 const { login, getLoginPage } = require("../controllers/authController");
 // deparmentcontroller
 const {
   getDepartmentPage,
   postCreateDepartment,
+  postDeleteDepartment,
+  postUpdateDepartment,
 } = require("../controllers/departmentController");
 
 adminRouter.get("/", getHomePage);
@@ -54,6 +57,8 @@ adminRouter.post(
 
 adminRouter.get("/departments", getDepartmentPage);
 adminRouter.post("/create-department", postCreateDepartment);
+adminRouter.post("/delete-department", postDeleteDepartment);
+adminRouter.post("/update-department", postUpdateDepartment);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);

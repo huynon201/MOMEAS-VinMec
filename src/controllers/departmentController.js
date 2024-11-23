@@ -2,6 +2,8 @@ const {
   displayDepartment,
   createDepartment,
   checkUniqueId,
+  deleteDepartment,
+  updateDepartment,
 } = require("../services/CRUDDepartment");
 const { generateRandomId } = require("../untils/randomUntils");
 const { formatDate } = require("../untils/timeZone");
@@ -31,7 +33,20 @@ const postCreateDepartment = async (req, res) => {
   await createDepartment(id, name, des, create_at);
   res.redirect("back");
 };
+
+const postDeleteDepartment = async (req, res) => {
+  const id = req.body.id;
+  await deleteDepartment(id);
+  res.redirect("back");
+};
+const postUpdateDepartment = async (req, res) => {
+  const { editUserId, name, des } = req.body;
+  await updateDepartment(editUserId, name, des);
+  res.redirect("back");
+};
 module.exports = {
   getDepartmentPage,
   postCreateDepartment,
+  postDeleteDepartment,
+  postUpdateDepartment,
 };

@@ -32,8 +32,21 @@ const checkUniqueId = async (id) => {
   );
   return rows[0].count === 0; // Trả về true nếu id là duy nhất
 };
+const deleteDepartment = async (id) => {
+  let results = connection.query(`DELETE FROM departments WHERE id = ?`, [id]);
+};
+const updateDepartment = async (editUserId, name, des) => {
+  let results = connection.query(
+    `UPDATE departments 
+    SET name = ?, description = ? WHERE id = ?`,
+    [name, des, editUserId]
+  );
+  return results;
+};
 module.exports = {
   displayDepartment,
   createDepartment,
   checkUniqueId,
+  deleteDepartment,
+  updateDepartment,
 };
