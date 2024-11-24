@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nhân Viên | Bệnh viện Vinmec</title>
+    <title>Tài Khoản | Bệnh viện Vinmec</title>
     <!-- favicon -->
     <link
       rel="icon"
@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="/admin/css/category.css" />
     <link rel="stylesheet" href="/admin/css/product.css" />
     <!-- JavaScript  -->
-
     <script src="/admin/js/main.js" defer></script>
     <script src="/admin/js/datalist.js" defer></script>
   </head>
@@ -41,7 +40,7 @@
       <div class="colum-content">
         <%- include("./layout/header.ejs") %>
         <div class="colum-title">
-          <p>Nhân viên</p>
+          <p>Tài khoản</p>
         </div>
         <div class="btn-add">
           <button
@@ -52,7 +51,7 @@
             data-bs-target="#myModal">
             Tạo
           </button>
-          <!-- start modal tạo phòng ban -->
+          <!-- start modal tạo account -->
           <div
             class="modal fade"
             id="myModal"
@@ -69,66 +68,65 @@
                     class="btn-close position-absolute end-0 me-3"
                     data-bs-dismiss="modal"></button>
                 </div>
-                <form action="/admin/create-employee" method="POST">
+                <form action="/admin/create-account" method="POST">
                   <div class="modal-body">
                     <div class="mb-3 mt-3">
                       <p>Tên nhân viên:</p>
-                      <input
-                        type="text"
-                        id="name"
-                        class="form-control"
-                        placeholder="Tên nhân viên"
-                        name="name"
-                        required />
-                    </div>
-                    <div class="mb-3 mt-3">
-                      <p>Tên phòng ban:</p>
                       <fieldset>
                         <input
                           id="modalAdd"
                           type="search"
                           autocomplete="off"
                           class="form-control"
-                          name="department"
-                          placeholder="Chọn phòng ban"
+                          name="name_employee"
+                          placeholder="Chọn nhân viên"
                           required />
                         <ul id="suggestionAdd" class="suggestions">
-                          <% listDepartment.forEach(function(department){%>
-                          <li><%= department.name %></li>
+                          <% listEmployee.forEach(function(employee){%>
+                          <li><%= employee.name_employee %></li>
                           <% }); %>
                         </ul>
                       </fieldset>
                     </div>
                     <div class="mb-3 mt-3">
-                      <p>Vai trò:</p>
+                      <p>Tên đăng nhập:</p>
                       <input
                         type="text"
-                        id="regency"
+                        id="name"
                         class="form-control"
-                        placeholder="Tên nhân viên"
-                        name="regency"
+                        placeholder="Nhập tên đăng nhập"
+                        name="name_account"
                         required />
                     </div>
 
                     <div class="mb-3 mt-3">
-                      <p>Số điện thoại:</p>
+                      <p>Mật khẩu:</p>
+
                       <input
-                        type="number"
-                        id="phoneNumber"
+                        type="password"
+                        id="address"
                         class="form-control"
-                        placeholder="Tên nhân viên"
-                        name="phoneNumber"
+                        placeholder="Nhập mật khẩu"
+                        name="pwd"
                         required />
                     </div>
                     <div class="mb-3 mt-3">
-                      <p>Địa chỉ:</p>
-                      <input
-                        type="text"
-                        id="address"
-                        class="form-control"
-                        placeholder="Tên nhân viên"
-                        name="address"
-                        required />
+                      <p>Vai trò:</p>
+                      <fieldset>
+                        <input
+                          id="role"
+                          type="search"
+                          autocomplete="off"
+                          class="form-control"
+                          name="role"
+                          placeholder="Chọn quyền"
+                          required />
+                        <ul id="suggestionRole" class="suggestions">
+                          <% listRole.forEach(function(role){%>
+                          <li><%= role.name %></li>
+                          <% }); %>
+                        </ul>
+                      </fieldset>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -153,39 +151,37 @@
                 <th>STT</th>
                 <th>ID</th>
                 <th>Tên nhân viên</th>
-                <th>Phòng ban</th>
+                <th>Tên đăng nhập</th>
+                <th>Mật khẩu</th>
                 <th>Vai trò</th>
-                <th>Số điện thoại</th>
-                <th>Địa chỉ</th>
                 <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
-              <% listEmployee.forEach(function(employee, index) {%>
+              <% listAccount.forEach(function(account, index) {%>
               <tr>
                 <td><%= index+1 %></td>
-                <td><%= employee.id %></td>
-                <td><%= employee.name_employee %></td>
-                <td><%= employee.name_department %></td>
-                <td><%= employee.role %></td>
-                <td><%= employee.phone %></td>
-                <td><%= employee.address %></td>
+                <td><%= account.id %></td>
+                <td><%= account.name_employee %></td>
+                <td><%= account.name_account %></td>
+                <td><%= account.password %></td>
+                <td><%= account.role %></td>
                 <td>
                   <button
                     class="btn btn-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#modalEdit"
-                    onclick="openEditEmployee('<%= employee.id %>', '<%= employee.name_employee %>', '<%= employee.name_department %>','<%= employee.role %>','<%= employee.phone %>','<%= employee.address %>')">
+                    onclick="openEditEmployee('<%= account.id %>', '<%= account.name_employee %>', '<%= account.name_account %>','<%= account.password %>','<%= account.role %>')">
                     Sửa
                   </button>
                   <button
                     class="btn btn-danger xoa"
-                    data-id="<%= employee.id %>">
+                    data-id="<%= account.id %>">
                     Xóa
                   </button>
 
                   <div
-                    id="confirmDelete-<%= employee.id %>"
+                    id="confirmDelete-<%= account.id %>"
                     class="popover-content d-none">
                     <div class="popover-heading">
                       <i
@@ -208,7 +204,7 @@
                         <input
                           type="hidden"
                           name="id"
-                          value="<%= employee.id %>" />
+                          value="<%= account.id %>" />
                         <button
                           type="submit"
                           class="btn btn-outline-danger btn-sm">
@@ -229,99 +225,5 @@
         </div>
       </div>
     </div>
-    <!-- start modal edit product-->
-    <div
-      class="modal fade"
-      id="modalEdit"
-      tabindex="-1"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div
-            class="modal-header d-flex justify-content-center position-relative">
-            <h4>Chỉnh sửa thông tin nhân viên</h4>
-            <button
-              type="button"
-              class="btn-close position-absolute end-0 me-3"
-              data-bs-dismiss="modal"></button>
-          </div>
-          <form action="/admin/update-employee" method="POST">
-            <div class="modal-body">
-              <input type="hidden" id="editemployeeId" name="editemployeeId" />
-              <div class="mb-3 mt-3">
-                <p>Tên nhân viên:</p>
-                <input
-                  type="text"
-                  id="nameEdit"
-                  class="form-control"
-                  placeholder="Tên nhân viên"
-                  name="name"
-                  required />
-              </div>
-              <div class="mb-3 mt-3">
-                <p>Tên phòng ban:</p>
-                <fieldset>
-                  <input
-                    id="modalEditElement"
-                    type="search"
-                    autocomplete="off"
-                    class="form-control"
-                    name="department"
-                    placeholder="Chọn phòng ban"
-                    required />
-                  <ul id="suggestionEdit" class="suggestions">
-                    <% listDepartment.forEach(function(department){%>
-                    <li><%= department.name %></li>
-                    <% }); %>
-                  </ul>
-                </fieldset>
-              </div>
-              <div class="mb-3 mt-3">
-                <p>Vai trò:</p>
-                <input
-                  type="text"
-                  id="regencyEdit"
-                  class="form-control"
-                  placeholder="Tên nhân viên"
-                  name="regency"
-                  required />
-              </div>
-
-              <div class="mb-3 mt-3">
-                <p>Số điện thoại:</p>
-                <input
-                  type="number"
-                  id="phoneNumberEdit"
-                  class="form-control"
-                  placeholder="Tên nhân viên"
-                  name="phoneNumber"
-                  required />
-              </div>
-              <div class="mb-3 mt-3">
-                <p>Địa chỉ:</p>
-                <input
-                  type="text"
-                  id="addressEdit"
-                  class="form-control"
-                  placeholder="Tên nhân viên"
-                  name="address"
-                  required />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal">
-                Hủy
-              </button>
-              <button type="submit" class="btn btn-info">Tạo</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- end modal edit product-->
   </body>
 </html>

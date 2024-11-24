@@ -26,7 +26,7 @@ const authenticateJWT = (req, res, next) => {
 
 // Middleware kiểm tra quyền admin
 const authorizeAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 1) {
+  if (req.user && req.user.role == "admin") {
     return next(); // Tiếp tục nếu là admin
   }
   return res.status(403).json({ message: "Forbidden. Admin only." });
@@ -34,7 +34,7 @@ const authorizeAdmin = (req, res, next) => {
 
 // Middleware kiểm tra quyền user
 const authorizeUser = (req, res, next) => {
-  if (req.user && req.user.role === 2) {
+  if (req.user && req.user.role == "user") {
     return next(); // Tiếp tục nếu là user
   }
   return res.status(403).json({ message: "Forbidden. User only." });

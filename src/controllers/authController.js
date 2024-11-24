@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { findUserByUserName, createUser } = require("../services/userModel");
+const { findUserByUserName } = require("../services/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -10,7 +10,7 @@ const login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       const token = jwt.sign(
-        { name: user.name, role: user.role_id },
+        { name: user.name_account, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: "2h" }
       );
@@ -21,9 +21,9 @@ const login = async (req, res) => {
         maxAge: 7200000,
       });
 
-      if (user.role_id === 1) {
+      if (user.role == "admin") {
         res.redirect("/admin");
-      } else if (user.role_id === 2) {
+      } else if (user.role == "user") {
         res.redirect("/user");
       }
     } else {

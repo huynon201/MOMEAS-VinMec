@@ -1,22 +1,30 @@
 const connection = require("../configs/database");
-const displayEmployee = async (page, limit) => {
-  const offset = (page - 1) * limit; // Tính vị trí bắt đầu
+const displayEmployee = async (page = null, limit = null) => {
+  if (page === null || limit === null) {
+    // Lấy toàn bộ danh sách nhân viên
+    const [results] = await connection.query(
+      `SELECT name_employee FROM employees ORDER BY name_employee`
+    );
+    return results;
+  } else {
+    const offset = (page - 1) * limit; // Tính vị trí bắt đầu
+    const [countResult] = await connection.query(
+      "SELECT COUNT(*) AS total FROM employees"
+    );
+    const totalItems = countResult[0].total;
 
-  // Đếm tổng số danh mục
-  const [countResult] = await connection.query(
-    "SELECT COUNT(*) AS total FROM employees"
-  );
-  const totalItems = countResult[0].total;
-  let [results, fields] = await connection.query(
-    `SELECT * FROM employees ORDER BY created_at ASC LIMIT ? OFFSET ?`,
-    [limit, offset]
-  );
+    const [results] = await connection.query(
+      `SELECT * FROM employees ORDER BY created_at ASC LIMIT ? OFFSET ?`,
+      [limit, offset]
+    );
 
-  return {
-    employee: results,
-    totalItems,
-  };
+    return {
+      employee: results,
+      totalItems,
+    };
+  }
 };
+
 const displayDepartment = async (req, res) => {
   let [result, fields] = await connection.query(`SELECT name FROM departments`);
   return result;

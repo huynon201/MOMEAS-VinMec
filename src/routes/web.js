@@ -36,6 +36,11 @@ const {
   postUpdateEmployee,
 } = require("../controllers/employeeController");
 
+const {
+  getAccountPage,
+  postCreateAccount,
+} = require("../controllers/accountController");
+
 adminRouter.get("/", getHomePage);
 
 adminRouter.get("/categorary", getCategoraryPage);
@@ -72,6 +77,9 @@ adminRouter.get("/employee", getemployeePage);
 adminRouter.post("/create-employee", postCreateEmployee);
 adminRouter.post("/delete-employee", postDeleteEmployee);
 adminRouter.post("/update-employee", postUpdateEmployee);
+
+adminRouter.get("/account", getAccountPage);
+adminRouter.post("/create-account", postCreateAccount);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
