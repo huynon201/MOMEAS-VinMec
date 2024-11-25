@@ -54,7 +54,14 @@ const postDeleteAccount = async (req, res) => {
 };
 const postUpdateAccount = async (req, res) => {
   const { editAccountId, name_employee, name_account, pwd, role } = req.body;
-  await updateAccount(editAccountId, name_employee, name_account, pwd, role);
+  const password = await updatePassword(pwd);
+  await updateAccount(
+    editAccountId,
+    name_employee,
+    name_account,
+    password,
+    role
+  );
   res.redirect("back");
 };
 module.exports = {
