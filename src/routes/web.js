@@ -35,13 +35,16 @@ const {
   postDeleteEmployee,
   postUpdateEmployee,
 } = require("../controllers/employeeController");
-
+// accountController
 const {
   getAccountPage,
   postCreateAccount,
   postDeleteAccount,
   postUpdateAccount,
 } = require("../controllers/accountController");
+
+// exportController
+const { getExportPage } = require("../controllers/exportController");
 
 adminRouter.get("/", getHomePage);
 
@@ -84,6 +87,8 @@ adminRouter.get("/account", getAccountPage);
 adminRouter.post("/create-account", postCreateAccount);
 adminRouter.post("/delete-account", postDeleteAccount);
 adminRouter.post("/update-account", postUpdateAccount);
+
+adminRouter.get("/export", getExportPage);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
