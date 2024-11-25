@@ -39,6 +39,8 @@ const {
 const {
   getAccountPage,
   postCreateAccount,
+  postDeleteAccount,
+  postUpdateAccount,
 } = require("../controllers/accountController");
 
 adminRouter.get("/", getHomePage);
@@ -80,6 +82,8 @@ adminRouter.post("/update-employee", postUpdateEmployee);
 
 adminRouter.get("/account", getAccountPage);
 adminRouter.post("/create-account", postCreateAccount);
+adminRouter.post("/delete-account", postDeleteAccount);
+adminRouter.post("/update-account", postUpdateAccount);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);

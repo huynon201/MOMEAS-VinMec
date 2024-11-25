@@ -41,9 +41,23 @@ const displayRole = async (req, res) => {
   let [results, fields] = await connection.query(`SELECT id, name FROM roles`);
   return results;
 };
+const deleteAccount = async (id) => {
+  let [results, fields] = await connection.query(
+    `DELETE FROM accounts WHERE id = ? `,
+    [id]
+  );
+};
+const updateAccount = async (id, name_employee, name_account, pwd, role) => {
+  let [results, fields] = await connection.query(
+    `UPDATE accounts SET name_employee = ?, name_account = ?, password = ?, role = ? WHERE id = ?`,
+    [name_employee, name_account, pwd, role, id]
+  );
+};
 module.exports = {
   displayAccount,
   checkUniqueId,
   createAccount,
   displayRole,
+  deleteAccount,
+  updateAccount,
 };

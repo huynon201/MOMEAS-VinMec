@@ -171,7 +171,7 @@
                     class="btn btn-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#modalEdit"
-                    onclick="openEditEmployee('<%= account.id %>', '<%= account.name_employee %>', '<%= account.name_account %>','<%= account.password %>','<%= account.role %>')">
+                    onclick="openEditAccount('<%= account.id %>', '<%= account.name_employee %>', '<%= account.name_account %>','<%= account.password %>','<%= account.role %>')">
                     Sửa
                   </button>
                   <button
@@ -198,7 +198,7 @@
                         Hủy
                       </button>
                       <form
-                        action="/admin/delete-employee"
+                        action="/admin/delete-account"
                         method="POST"
                         style="display: inline">
                         <input
@@ -225,5 +225,98 @@
         </div>
       </div>
     </div>
+    <!-- start modal edit account-->
+    <div
+      class="modal fade"
+      id="modalEdit"
+      tabindex="-1"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header d-flex justify-content-center position-relative">
+            <h4>Chỉnh sửa thông tin tài khoản</h4>
+            <button
+              type="button"
+              class="btn-close position-absolute end-0 me-3"
+              data-bs-dismiss="modal"></button>
+          </div>
+          <form action="/admin/update-account" method="POST">
+            <input type="hidden" id="editAccountId" name="editAccountId" />
+            <div class="modal-body">
+              <div class="mb-3 mt-3">
+                <p>Tên nhân viên:</p>
+                <fieldset>
+                  <input
+                    id="modalEditElement"
+                    type="search"
+                    autocomplete="off"
+                    class="form-control"
+                    name="name_employee"
+                    placeholder="Chọn nhân viên"
+                    required />
+                  <ul id="suggestionEdit" class="suggestions">
+                    <% listEmployee.forEach(function(employee){%>
+                    <li><%= employee.name_employee %></li>
+                    <% }); %>
+                  </ul>
+                </fieldset>
+              </div>
+              <div class="mb-3 mt-3">
+                <p>Tên đăng nhập:</p>
+                <input
+                  type="text"
+                  id="nameEdit"
+                  class="form-control"
+                  placeholder="Nhập tên đăng nhập"
+                  name="name_account"
+                  required />
+              </div>
+
+              <div class="mb-3 mt-3">
+                <p>Mật khẩu:</p>
+
+                <input
+                  type="password"
+                  id="passwordEdit"
+                  class="form-control"
+                  placeholder="Nhập mật khẩu"
+                  name="pwd"
+                  required />
+              </div>
+              <div class="mb-3 mt-3">
+                <p>Vai trò:</p>
+                <fieldset>
+                  <input
+                    id="roleEdit"
+                    type="search"
+                    autocomplete="off"
+                    class="form-control"
+                    name="role"
+                    placeholder="Chọn quyền"
+                    required />
+                  <ul id="suggestionRoleEdit" class="suggestions">
+                    <% listRole.forEach(function(role){%>
+                    <li><%= role.name %></li>
+                    <% }); %>
+                  </ul>
+                </fieldset>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal">
+                Hủy
+              </button>
+              <button type="submit" class="btn btn-info">Tạo</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- end modal edit account-->
   </body>
 </html>

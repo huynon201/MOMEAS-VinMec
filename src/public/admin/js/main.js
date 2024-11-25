@@ -183,3 +183,10 @@ function openEditEmployee(id, name, department, role, phone, address) {
   document.getElementById("phoneNumberEdit").value = phone;
   document.getElementById("addressEdit").value = address;
 }
+function openEditAccount(id, name, account, password, role) {
+  document.getElementById("editAccountId").value = id;
+  document.getElementById("modalEditElement").value = name;
+  document.getElementById("nameEdit").value = account;
+  document.getElementById("passwordEdit").value = password;
+  document.getElementById("roleEdit").value = role;
+}

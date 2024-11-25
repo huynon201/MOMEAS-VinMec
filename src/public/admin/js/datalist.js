@@ -42,3 +42,4 @@ function initializeAutocomplete(inputId, suggestionsId) {
 initializeAutocomplete("modalAdd", "suggestionAdd");
 initializeAutocomplete("role", "suggestionRole");
 initializeAutocomplete("modalEditElement", "suggestionEdit");
+initializeAutocomplete("roleEdit", "suggestionRoleEdit");

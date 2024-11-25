@@ -4,6 +4,8 @@ const {
   checkUniqueId,
   createAccount,
   displayRole,
+  deleteAccount,
+  updateAccount,
 } = require("../services/CRUDAcount");
 const updatePassword = require("./updatepassword");
 const { generateRandomId } = require("../untils/randomUntils");
@@ -14,7 +16,6 @@ const getAccountPage = async (req, res) => {
   const totalPages = Math.ceil(totalItems / limit);
   let employee = await displayEmployee();
   let role = await displayRole();
-  console.log(role);
   return res.render("account.ejs", {
     activePage: "account",
     listEmployee: employee,
@@ -46,7 +47,19 @@ const postCreateAccount = async (req, res) => {
   );
   res.redirect("back");
 };
+const postDeleteAccount = async (req, res) => {
+  const id = req.body.id;
+  await deleteAccount(id);
+  res.redirect("back");
+};
+const postUpdateAccount = async (req, res) => {
+  const { editAccountId, name_employee, name_account, pwd, role } = req.body;
+  await updateAccount(editAccountId, name_employee, name_account, pwd, role);
+  res.redirect("back");
+};
 module.exports = {
   getAccountPage,
   postCreateAccount,
+  postDeleteAccount,
+  postUpdateAccount,
 };
