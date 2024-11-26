@@ -28,8 +28,12 @@
     <!-- css -->
     <link rel="stylesheet" href="/admin/css/style.css" />
     <link rel="stylesheet" href="/admin/css/category.css" />
+    <link rel="stylesheet" href="/admin/css/product.css" />
     <!-- JavaScript  -->
     <script src="/admin/js/main.js" defer></script>
+    <script src="/admin/js/export.js" defer></script>
+    <script src="/admin/js/datalist.js" defer></script>
+    <script src="/admin/js/datalistproduct.js" defer></script>
   </head>
   <body>
     <%- include("./layout/spinner.ejs") %>
@@ -38,12 +42,154 @@
       <div class="colum-content">
         <%- include("./layout/header.ejs") %>
         <div class="colum-title">
-          <p>Danh mục</p>
+          <p>Phiếu xuất</p>
+        </div>
+        <div class="btn-add">
+          <button
+            id="xuat"
+            type="button"
+            class="m-2 rounded-2"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-xuat">
+            Xuất
+          </button>
         </div>
         <div class="table-list">
+          <table class="table-danh-muc table table-hover">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Tên phiếu xuất</th>
+                <th>Nhân viên nhận</th>
+                <th>Phòng ban nhận</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% listExport.forEach(function(ex, index) { %> <%#if(category.name
+              == "a") { %> <%# (!"searchInput" || category.name.includes("a")) {
+              %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= ex.id %></td>
+                <td><%= ex.name %></td>
+                <td><%= ex.name_employee %></td>
+                <td><%= ex.name_department %></td>
+              </tr>
+              <%# } %> <%}); %>
+            </tbody>
+          </table>
           <!-- start phân trang -->
-          <%#- include("./layout/pagination.ejs") %>
+          <%- include("./layout/pagination.ejs") %>
           <!-- end phân trang -->
+        </div>
+      </div>
+    </div>
+    <!-- phiếu xuất -->
+    <div class="modal fade" id="modal-xuat" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div
+            class="modal-header d-flex justify-content-center position-relative">
+            <h4>Phiếu xuất kho</h4>
+            <button
+              type="button"
+              class="btn-close position-absolute end-0 me-3"
+              data-bs-dismiss="modal"></button>
+          </div>
+          <form action="/admin/create-export" method="POST">
+            <div class="modal-body">
+              <div class="mb-3">
+                <button
+                  type="button"
+                  class="them-vat-tu btn btn-info"
+                  style="color: white"
+                  onclick="addNewRow()">
+                  Thêm vật tư
+                </button>
+              </div>
+              <div>
+                <table
+                  style="table-layout: auto"
+                  class="table-phieu-xuat table text-center"
+                  id="render-xuat">
+                  <thead>
+                    <tr>
+                      <th style="width: 50%">Tên vật tư</th>
+                      <th>Số lượng</th>
+                      <th style="width: 25%">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div class="mt-5">
+                <div class="mb-3 mt-3">
+                  <p>Tên phiếu xuất kho:</p>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    placeholder="Nhập tên phiếu xuất kho"
+                    name="name_export"
+                    required />
+                </div>
+                <div class="mb-3 mt-3">
+                  <p>Phòng ban nhận:</p>
+                  <fieldset>
+                    <input
+                      id="role"
+                      type="search"
+                      autocomplete="off"
+                      class="form-control"
+                      name="department"
+                      placeholder="Chọn phòng nhận"
+                      required />
+                    <ul id="suggestionRole" class="suggestions">
+                      <% listDepartment.forEach(function(department){%>
+                      <li><%= department.name %></li>
+                      <% }); %>
+                    </ul>
+                  </fieldset>
+                </div>
+
+                <div class="mb-3 mt-3">
+                  <p>Tên nhân viên:</p>
+                  <fieldset>
+                    <input
+                      id="modalAdd"
+                      type="search"
+                      autocomplete="off"
+                      class="form-control"
+                      name="name_employee"
+                      placeholder="Chọn nhân viên"
+                      required />
+                    <ul id="suggestionAdd" class="suggestions">
+                      <% listEmployee.forEach(function(employee){%>
+                      <li><%= employee.name_employee %></li>
+                      <% }); %>
+                    </ul>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal">
+                Hủy
+              </button>
+              <button
+                type="submit"
+                id="importButton"
+                data-bs-dismiss="modal"
+                class="xuat-phieu-kho btn btn-info">
+                Xuất
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

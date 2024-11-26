@@ -1,21 +1,29 @@
 const connection = require("../configs/database");
-const displayProduct = async (page, limit) => {
-  const offset = (page - 1) * limit; // Tính vị trí bắt đầu
+const displayProduct = async (page = null, limit = null) => {
+  if (page === null || limit === null) {
+    // Lấy toàn bộ danh sách nhân viên
+    const [results] = await connection.query(
+      `SELECT name, id FROM products ORDER BY name`
+    );
+    return results;
+  } else {
+    const offset = (page - 1) * limit; // Tính vị trí bắt đầu
 
-  // Đếm tổng số danh mục
-  const [countResult] = await connection.query(
-    "SELECT COUNT(*) AS total FROM products"
-  );
-  const totalItems = countResult[0].total;
-  let [results, fields] = await connection.query(
-    `SELECT * FROM products ORDER BY created_at ASC LIMIT ? OFFSET ?`,
-    [limit, offset]
-  );
+    // Đếm tổng số danh mục
+    const [countResult] = await connection.query(
+      "SELECT COUNT(*) AS total FROM products"
+    );
+    const totalItems = countResult[0].total;
+    let [results, fields] = await connection.query(
+      `SELECT * FROM products ORDER BY created_at ASC LIMIT ? OFFSET ?`,
+      [limit, offset]
+    );
 
-  return {
-    products: results,
-    totalItems,
-  };
+    return {
+      products: results,
+      totalItems,
+    };
+  }
 };
 const checkUniqueId = async (id) => {
   const [rows] = await connection.query(

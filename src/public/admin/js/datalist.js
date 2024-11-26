@@ -43,3 +43,4 @@ initializeAutocomplete("modalAdd", "suggestionAdd");
 initializeAutocomplete("role", "suggestionRole");
 initializeAutocomplete("modalEditElement", "suggestionEdit");
 initializeAutocomplete("roleEdit", "suggestionRoleEdit");
+// initializeAutocomplete("producttb", "suggestionProduct");

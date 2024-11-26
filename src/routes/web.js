@@ -44,7 +44,10 @@ const {
 } = require("../controllers/accountController");
 
 // exportController
-const { getExportPage } = require("../controllers/exportController");
+const {
+  getExportPage,
+  postCreateExport,
+} = require("../controllers/exportController");
 
 adminRouter.get("/", getHomePage);
 
@@ -89,6 +92,13 @@ adminRouter.post("/delete-account", postDeleteAccount);
 adminRouter.post("/update-account", postUpdateAccount);
 
 adminRouter.get("/export", getExportPage);
+const { displayProduct } = require("../services/CRUDProduct");
+adminRouter.get("/api/products", async (req, res) => {
+  let product = await displayProduct();
+  res.json(product);
+});
+
+adminRouter.post("/create-export", postCreateExport);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
