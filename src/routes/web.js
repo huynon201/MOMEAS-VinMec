@@ -97,6 +97,11 @@ adminRouter.get("/api/products", async (req, res) => {
   let product = await displayProduct();
   res.json(product);
 });
+const { displayDetail } = require("../services/CRUDExport");
+adminRouter.get("/api/detail", async (req, res) => {
+  let detail = await displayDetail();
+  res.json(detail);
+});
 
 adminRouter.post("/create-export", postCreateExport);
 

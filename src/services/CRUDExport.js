@@ -26,6 +26,7 @@ const displayExport = async (page = null, limit = null) => {
     };
   }
 };
+
 const checkUniqueId = async (id) => {
   const [rows] = await connection.query(
     "SELECT COUNT(*) AS count FROM departments WHERE id = ?",
@@ -33,82 +34,59 @@ const checkUniqueId = async (id) => {
   );
   return rows[0].count === 0; // Trả về true nếu id là duy nhất
 };
-// const createExport = async (
-//   id,
-//   producttb,
-//   quantity,
-//   name_export,
-//   department,
-//   name_employee,
-//   create_at
-// ) => {
-//   let [results, fields] = await connection.query(
-//     `INSERT INTO exports (id,name, name_department, name_employee, created_at) VALUES (?, ?, ?, ?, ?)`,
-//     [id, name_export, department, name_employee, create_at]
-//   );
-//   //   const exportDetailsValues = producttb.map((product) => [
-//   //     name_export,
-//   //     product.name,
-//   //     product.quantity,
-//   //   ]);
-//   //   let [results2, fields2] = await connection.query(
-//   //     `INSERT INTO exportDetails (name_export, name_product, quantity_product)
-//   //     VALUES (?, ?, ?)`,
-//   //     [exportDetailsValues]
-//   //   );
-//   // Insert into 'exportDetails' table
-//   // Kiểm tra xem mảng name_producttb và quantity có dữ liệu hay không
-//   if (producttb && quantity && producttb.length === quantity.length) {
-//     const insertPromises = producttb.map((product, index) => {
-//       return connection.query(
-//         `INSERT INTO exportDetails (name_export, name_product, quantity_product) VALUES (?, ?, ?)`,
-//         [name_export, product, quantity[index]]
-//       );
-//     });
-//     await Promise.all(insertPromises);
-//   } else {
-//     console.log("Product and quantity arrays do not match.");
-//   }
-// };
 const createExport = async (
   id,
-  producttb,
-  quantity,
   name_export,
   department,
   name_employee,
   create_at
 ) => {
-  // Insert into 'exports' table
-  console.log("Inserting into 'exports' table...");
   let [results, fields] = await connection.query(
     `INSERT INTO exports (id,name, name_department, name_employee, created_at) VALUES (?, ?, ?, ?, ?)`,
     [id, name_export, department, name_employee, create_at]
   );
-  console.log("Export inserted:", results);
+};
 
-  // Insert into 'exportDetails' table
-  if (producttb && quantity && producttb.length === quantity.length) {
-    const insertPromises = producttb.map((product, index) => {
-      console.log(
-        `Inserting into 'exportDetails' table for product: ${product}, quantity: ${quantity[index]}`
-      );
-      return connection.query(
-        `INSERT INTO exportDetails (name_export, name_product, quantity_product) VALUES (?, ?, ?)`,
-        [name_export, product, quantity[index]]
-      );
+const createExportDetails = async (name_export, producttb, quantity) => {
+  var exportDetails;
+  if (Array.isArray(producttb)) {
+    // Kiểm tra producttb có phải là mảng không
+    exportDetails = producttb.map((product, index) => {
+      return [product, quantity[index], name_export];
     });
-
-    // Wait for all promises to complete
-    await Promise.all(insertPromises);
-    console.log("All export details inserted successfully.");
   } else {
-    console.log("Product and quantity arrays do not match.");
+    exportDetails = [[producttb, quantity, name_export]]; // Đảm bảo đúng cấu trúc cho 1 bản ghi
   }
+
+  const sql = `INSERT INTO exportDetails (name_product, quantity_product, name_export)
+        VALUES ?`;
+  const [totalProduct] = await connection.query(
+    `SELECT COUNT(*) AS total FROM products`
+  );
+  const totalItems = countResult[0].total;
+  const remainItems = totalItems - quantity;
+  let [results, fields] = await connection.query(
+    `UPDATE products SET quantity = ? WHRE name_product = ?`,
+    [remainItems, producttb]
+  );
+  try {
+    const [result] = await connection.query(sql, [exportDetails]);
+    return { success: true, affectedRows: result.affectedRows };
+  } catch (error) {
+    console.error("Lỗi khi lưu dữ liệu:", error);
+    throw error; // Ném lỗi ra để xử lý ở hàm gọi
+  }
+};
+const displayDetail = async (nameExport) => {
+  const sql = `SELECT * FROM exportDetails WHERE name_export = ?`;
+  let [results] = await connection.query(sql, [nameExport]);
+  return results;
 };
 
 module.exports = {
   displayExport,
   createExport,
   checkUniqueId,
+  createExportDetails,
+  displayDetail,
 };

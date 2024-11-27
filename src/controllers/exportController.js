@@ -6,23 +6,32 @@ const {
   displayExport,
   createExport,
   checkUniqueId,
+  createExportDetails,
+  displayDetail,
 } = require("../services/CRUDExport");
 
 const getExportPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
   const limit = 10; // Số phần tử mỗi trang
-  let { ex, totalItems } = await displayExport(page, limit);
+  let { ex: listExport, totalItems } = await displayExport(page, limit);
   // console.log(ex);
   let employee = await displayEmployee();
   let department = await displayDepartment();
   let product = await displayProduct();
+
+  let listDetail = {};
+  for (let exportItem of listExport) {
+    const details = await displayDetail(exportItem.name); // Gọi hàm displayDetail với tên phiếu xuất
+    listDetail[exportItem.id] = details; // Sử dụng ID phiếu xuất làm key
+  }
   const totalPages = Math.ceil(totalItems / limit);
   return res.render("warehouseExport.ejs", {
     activePage: "export",
     listEmployee: employee,
     listDepartment: department,
     listProduct: product,
-    listExport: ex,
+    listExport,
+    listDetail,
     currentPage: page,
     totalPages,
   });
@@ -35,18 +44,11 @@ const postCreateExport = async (req, res) => {
     isUnique = await checkUniqueId(id);
   }
   const create_at = new Date();
-  const { producttb, quantity, name_export, department, name_employee } =
+  const { name_producttb, quantity, name_export, department, name_employee } =
     req.body;
-  console.log(req.body);
-  await createExport(
-    id,
-    producttb,
-    quantity,
-    name_export,
-    department,
-    name_employee,
-    create_at
-  );
+  await createExport(id, name_export, department, name_employee, create_at);
+  await createExportDetails(name_export, name_producttb, quantity);
+
   res.redirect("back");
 };
 module.exports = {
