@@ -42,7 +42,7 @@
       <div class="colum-content">
         <%- include("./layout/header.ejs") %>
         <div class="colum-title">
-          <p>Phiếu xuất</p>
+          <p>Phiếu nhập</p>
         </div>
         <div class="btn-add">
           <button
@@ -51,7 +51,7 @@
             class="m-2 rounded-2"
             data-bs-toggle="modal"
             data-bs-target="#modal-xuat">
-            Xuất
+            Nhập
           </button>
         </div>
         <div class="table-list">
@@ -60,24 +60,22 @@
               <tr>
                 <th>STT</th>
                 <th>ID</th>
-                <th>Tên phiếu xuất</th>
-                <th>Nhân viên nhận</th>
-                <th>Phòng ban nhận</th>
-                <th>Ngày xuất</th>
+                <th>Tên phiếu nhập</th>
+                <th>Ngày nhập</th>
               </tr>
             </thead>
 
             <tbody>
-              <% listExport.forEach(function(ex, index) { %> <%#if(category.name
+              <% listImport.forEach(function(ex, index) { %> <%#if(category.name
               == "a") { %> <%# (!"searchInput" || category.name.includes("a")) {
               %>
               <tr data-bs-toggle="modal" data-bs-target="#modal-<%= ex.id %>">
                 <td><%= index + 1 %></td>
                 <td><%= ex.id %></td>
                 <td><%= ex.name %></td>
-                <td><%= ex.name_employee %></td>
-                <td><%= ex.name_department %></td>
-                <td><%= ex.created_at %></td>
+                <td>
+                  <%= moment(ex.created_at).format("HH:mm--DD/MM/YYYY") %>
+                </td>
               </tr>
               <%# } %> <%}); %>
             </tbody>
@@ -88,19 +86,19 @@
         </div>
       </div>
     </div>
-    <!-- start phiếu xuất -->
+    <!-- start phiếu nhập -->
     <div class="modal fade" id="modal-xuat" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div
             class="modal-header d-flex justify-content-center position-relative">
-            <h4>Phiếu xuất kho</h4>
+            <h4>Phiếu nhập kho</h4>
             <button
               type="button"
               class="btn-close position-absolute end-0 me-3"
               data-bs-dismiss="modal"></button>
           </div>
-          <form action="/admin/create-export" method="POST">
+          <form action="/admin/create-import" method="POST">
             <div class="modal-body">
               <div class="mb-3">
                 <button
@@ -128,51 +126,14 @@
               </div>
               <div class="mt-5">
                 <div class="mb-3 mt-3">
-                  <p>Tên phiếu xuất kho:</p>
+                  <p>Tên phiếu nhập kho:</p>
                   <input
                     type="text"
                     id="name"
                     class="form-control"
-                    placeholder="Nhập tên phiếu xuất kho"
-                    name="name_export"
+                    placeholder="Nhập tên phiếu nhập kho"
+                    name="name_import"
                     required />
-                </div>
-                <div class="mb-3 mt-3">
-                  <p>Phòng ban nhận:</p>
-                  <fieldset>
-                    <input
-                      id="role"
-                      type="search"
-                      autocomplete="off"
-                      class="form-control"
-                      name="department"
-                      placeholder="Chọn phòng nhận"
-                      required />
-                    <ul id="suggestionRole" class="suggestions">
-                      <% listDepartment.forEach(function(department){%>
-                      <li><%= department.name %></li>
-                      <% }); %>
-                    </ul>
-                  </fieldset>
-                </div>
-
-                <div class="mb-3 mt-3">
-                  <p>Tên nhân viên:</p>
-                  <fieldset>
-                    <input
-                      id="modalAdd"
-                      type="search"
-                      autocomplete="off"
-                      class="form-control"
-                      name="name_employee"
-                      placeholder="Chọn nhân viên"
-                      required />
-                    <ul id="suggestionAdd" class="suggestions">
-                      <% listEmployee.forEach(function(employee){%>
-                      <li><%= employee.name_employee %></li>
-                      <% }); %>
-                    </ul>
-                  </fieldset>
                 </div>
               </div>
             </div>
@@ -188,22 +149,22 @@
                 id="importButton"
                 data-bs-dismiss="modal"
                 class="xuat-phieu-kho btn btn-info">
-                Xuất
+                Nhập
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <!-- end phiếu xuất -->
-    <!-- start chi tiết phiếu xuất -->
-    <% listExport.forEach(function(ex) { %>
+    <!-- end phiếu nhập -->
+    <!-- start chi tiết phiếu nhập -->
+    <% listImport.forEach(function(ex) { %>
     <div class="modal fade" id="modal-<%= ex.id  %>" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div
             class="modal-header d-flex justify-content-center position-relative">
-            <h4>Chi tiết phiếu xuất kho</h4>
+            <h4>Chi tiết phiếu nhập kho</h4>
             <button
               type="button"
               class="btn-close position-absolute end-0 me-3"
@@ -212,15 +173,19 @@
           <div class="modal-body">
             <div class="mt-5">
               <div class="mb-3 mt-3">
-                <p>Tên phiếu xuất kho:</p>
-                <p><%= ex.name %></p>
+                <label>Tên phiếu nhập kho:</label>
+                <label><%= ex.name %></label>
               </div>
               <div class="mb-3 mt-3">
-                <p>Ngày xuất:</p>
-                <p><%= ex.created_at %></p>
+                <label>Ngày nhập:</label>
+                <label>
+                  <%= moment(ex.created_at).format("HH:mm--DD/MM/YYYY") %>
+                </label>
               </div>
               <div>
-                <table style="table-layout: auto" class="table text-center">
+                <table
+                  style="table-layout: auto"
+                  class="table text-center table-striped">
                   <thead>
                     <tr>
                       <th style="width: 50%">Tên vật tư</th>
@@ -257,7 +222,7 @@
               id="importButton"
               data-bs-dismiss="modal"
               class="xuat-phieu-kho btn btn-info">
-              Xuất
+              Nhập
             </button>
           </div>
         </div>
@@ -265,6 +230,6 @@
     </div>
     <% }) %>
 
-    <!-- end chi tiết phiếu xuất -->
+    <!-- end chi tiết phiếu nhập -->
   </body>
 </html>

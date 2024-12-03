@@ -9,6 +9,7 @@ const {
   updateCategory,
 } = require("../services/CRUDService");
 const { displayProduct } = require("../services/CRUDProduct");
+var moment = require("moment");
 
 const getHomePage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
@@ -50,7 +51,8 @@ const postCategorary = async (req, res) => {
   }
   const { name, des } = req.body;
 
-  const create_at = new Date();
+  const at = new Date();
+  const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
   await createCatrgory(id, name, des, create_at);
   res.redirect("back");
 };

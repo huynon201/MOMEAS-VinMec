@@ -9,6 +9,7 @@ const {
   createExportDetails,
   displayDetail,
 } = require("../services/CRUDExport");
+var moment = require("moment");
 
 const getExportPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
@@ -31,6 +32,7 @@ const getExportPage = async (req, res) => {
     listDepartment: department,
     listProduct: product,
     listExport,
+    moment,
     listDetail,
     currentPage: page,
     totalPages,
@@ -43,7 +45,8 @@ const postCreateExport = async (req, res) => {
     id = generateRandomId();
     isUnique = await checkUniqueId(id);
   }
-  const create_at = new Date();
+  const at = new Date();
+  const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
   const { name_producttb, quantity, name_export, department, name_employee } =
     req.body;
   await createExport(id, name_export, department, name_employee, create_at);

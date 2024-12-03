@@ -6,7 +6,8 @@ const {
   updateDepartment,
 } = require("../services/CRUDDepartment");
 const { generateRandomId } = require("../untils/randomUntils");
-const { formatDate } = require("../untils/timeZone");
+var moment = require("moment");
+
 const getDepartmentPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = 10;
@@ -28,7 +29,8 @@ const postCreateDepartment = async (req, res) => {
     isUnique = await checkUniqueId(id);
   }
   const { name, des } = req.body;
-  const create_at = new Date();
+  const at = new Date();
+  const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
   console.log(create_at);
   await createDepartment(id, name, des, create_at);
   res.redirect("back");

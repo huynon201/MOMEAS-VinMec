@@ -9,6 +9,8 @@ const {
 } = require("../services/CRUDAcount");
 const updatePassword = require("./updatepassword");
 const { generateRandomId } = require("../untils/randomUntils");
+var moment = require("moment");
+
 const getAccountPage = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
   const limit = 10; // Số phần tử mỗi trang
@@ -32,7 +34,8 @@ const postCreateAccount = async (req, res) => {
     id = generateRandomId();
     isUnique = await checkUniqueId(id);
   }
-  const create_at = new Date();
+  const at = new Date();
+  const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
   const { name_employee, name_account, pwd, role } = req.body;
 
   const password = await updatePassword(pwd);

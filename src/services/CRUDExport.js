@@ -30,7 +30,7 @@ const displayExport = async (page = null, limit = null) => {
 
 const checkUniqueId = async (id) => {
   const [rows] = await connection.query(
-    "SELECT COUNT(*) AS count FROM departments WHERE id = ?",
+    "SELECT COUNT(*) AS count FROM exports WHERE id = ?",
     [id]
   );
   return rows[0].count === 0; // Trả về true nếu id là duy nhất

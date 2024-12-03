@@ -77,7 +77,9 @@
                 <td><%= ex.name %></td>
                 <td><%= ex.name_employee %></td>
                 <td><%= ex.name_department %></td>
-                <td><%= ex.created_at %></td>
+                <td>
+                  <%= moment(ex.created_at).format("HH:mm--DD/MM/YYYY") %>
+                </td>
               </tr>
               <%# } %> <%}); %>
             </tbody>
@@ -210,17 +212,21 @@
               data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <div class="mt-5">
+            <div class="mt-1">
               <div class="mb-3 mt-3">
-                <p>Tên phiếu xuất kho:</p>
-                <p><%= ex.name %></p>
+                <label>Tên phiếu xuất kho:</label>
+                <label><%= ex.name %></label>
               </div>
               <div class="mb-3 mt-3">
-                <p>Ngày xuất:</p>
-                <p><%= ex.created_at %></p>
+                <lablel>Ngày xuất:</lablel>
+                <label>
+                  <%= moment(ex.created_at).format("HH:mm--DD/MM/YYYY") %>
+                </label>
               </div>
               <div>
-                <table style="table-layout: auto" class="table text-center">
+                <table
+                  style="table-layout: auto"
+                  class="table text-center table-striped">
                   <thead>
                     <tr>
                       <th style="width: 50%">Tên vật tư</th>

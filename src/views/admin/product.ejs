@@ -159,6 +159,9 @@
                             src="" />
                         </div>
                       </div>
+                      <p
+                        id="fileNameDisplay"
+                        style="margin-top: 10px; font-style: italic"></p>
                     </div>
 
                     <div class="mb-3">
@@ -392,6 +395,9 @@
                       alt="avatar preview" />
                   </div>
                 </div>
+                <p
+                  id="fileNameDisplay"
+                  style="margin-top: 10px; font-style: italic"></p>
               </div>
 
               <div class="mb-3">
@@ -456,6 +462,31 @@
           }
         }
       }); // Kiểm tra mỗi 100ms
+    });
+    $(document).ready(() => {
+      const avatarFileEdit = $("#imageEdit"); // Input file
+      const avatarFile = $("#image"); // Input file
+
+      const fileNameDisplay = $("#fileNameDisplay"); // Phần tử hiển thị tên file
+      avatarFile.change(function (e) {
+        const files = e.target.files; // Lấy danh sách file
+        if (files.length > 0) {
+          const fileName = files[0].name; // Lấy tên file đầu tiên
+          fileNameDisplay.text(`Tên file đã chọn: ${fileName}`); // Hiển thị tên file
+        } else {
+          fileNameDisplay.text("Chưa có file nào được chọn."); // Thông báo nếu chưa chọn file
+        }
+      });
+      // Lắng nghe sự kiện thay đổi
+      avatarFileEdit.change(function (e) {
+        const files = e.target.files; // Lấy danh sách file
+        if (files.length > 0) {
+          const fileName = files[0].name; // Lấy tên file đầu tiên
+          fileNameDisplay.text(`Tên file đã chọn: ${fileName}`); // Hiển thị tên file
+        } else {
+          fileNameDisplay.text("Chưa có file nào được chọn."); // Thông báo nếu chưa chọn file
+        }
+      });
     });
   </script>
 </html>

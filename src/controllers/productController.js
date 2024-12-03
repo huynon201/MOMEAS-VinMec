@@ -9,7 +9,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 const { generateRandomId } = require("../untils/randomUntils");
-const { formatDate } = require("../untils/timeZone");
+var moment = require("moment");
+
 const {
   createProducts,
   displayProduct,
@@ -41,7 +42,8 @@ const postCreateProduct = async (req, res) => {
     isUnique = await checkUniqueId(id);
   }
   const image = req.files.image[0].filename;
-  const create_at = new Date();
+  const at = new Date();
+  const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
   const { name, des, quantity, brand, color, size, category } = req.body;
   const parsedQuantity = parseInt(quantity);
   await createProducts(

@@ -49,6 +49,11 @@ const {
   postCreateExport,
 } = require("../controllers/exportController");
 
+// importController
+const {
+  getImportPage,
+  postCreateImport,
+} = require("../controllers/importController");
 adminRouter.get("/", getHomePage);
 
 adminRouter.get("/categorary", getCategoraryPage);
@@ -104,6 +109,9 @@ adminRouter.get("/api/detail", async (req, res) => {
 });
 
 adminRouter.post("/create-export", postCreateExport);
+
+adminRouter.get("/import", getImportPage);
+adminRouter.post("/create-import", postCreateImport);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
