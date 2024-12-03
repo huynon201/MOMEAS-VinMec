@@ -13,6 +13,7 @@ const displayExport = async (page = null, limit = null) => {
     const [countResult] = await connection.query(
       "SELECT COUNT(*) AS total FROM exports"
     );
+
     const totalItems = countResult[0].total;
 
     let [results, fields] = await connection.query(
@@ -60,21 +61,47 @@ const createExportDetails = async (name_export, producttb, quantity) => {
 
   const sql = `INSERT INTO exportDetails (name_product, quantity_product, name_export)
         VALUES ?`;
-  const [totalProduct] = await connection.query(
-    `SELECT COUNT(*) AS total FROM products`
-  );
-  const totalItems = countResult[0].total;
-  const remainItems = totalItems - quantity;
-  let [results, fields] = await connection.query(
-    `UPDATE products SET quantity = ? WHRE name_product = ?`,
-    [remainItems, producttb]
-  );
+  const sqlUpdate = `UPDATE products SET quantity = ? WHERE name = ?`;
+  const sqlQuantity = `SELECT quantity FROM products WHERE name = ?`;
+
   try {
+    for (let i = 0; i < exportDetails.length; i++) {
+      const [productName, qty, nameExport] = exportDetails[i];
+
+      // Lấy số lượng hiện tại
+
+      const [totalProduct] = await connection.query(sqlQuantity, [productName]);
+
+      if (totalProduct.length === 0) {
+        throw new Error(`Sản phẩm ${productName} không tồn tại.`);
+      }
+
+      const totalItems = totalProduct[0].quantity;
+
+      // Kiểm tra tồn kho
+      if (totalItems < qty) {
+        throw new Error(
+          `Số lượng không đủ cho sản phẩm ${productName}. Tồn kho: ${totalItems}, yêu cầu: ${qty}`
+        );
+      }
+
+      // Tính toán số lượng còn lại
+      const remainItems = totalItems - Number(qty);
+
+      // Cập nhật tồn kho
+      await connection.query(sqlUpdate, [remainItems, productName]);
+    }
+
+    // Thêm dữ liệu vào bảng exportDetails
     const [result] = await connection.query(sql, [exportDetails]);
-    return { success: true, affectedRows: result.affectedRows };
+
+    return {
+      success: true,
+      affectedRows: result.affectedRows,
+    };
   } catch (error) {
     console.error("Lỗi khi lưu dữ liệu:", error);
-    throw error; // Ném lỗi ra để xử lý ở hàm gọi
+    throw error;
   }
 };
 const displayDetail = async (nameExport) => {
