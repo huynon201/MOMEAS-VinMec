@@ -43,11 +43,12 @@ const createDepartment = async (
   regency,
   phoneNumber,
   address,
-  create_at
+  create_at,
+  image
 ) => {
   let results = await connection.query(
-    `INSERT INTO employees (id, name_employee, name_department, role, phone, address, created_at) VALUES (?, ? ,?, ?,?,?, ?)`,
-    [id, name, department, regency, phoneNumber, address, create_at]
+    `INSERT INTO employees (id, name_employee, name_department, role, phone, address, created_at, image) VALUES (?, ? ,?, ?,?,?, ?, ?)`,
+    [id, name, department, regency, phoneNumber, address, create_at, image]
   );
 };
 const deleteEmployee = async (id) => {
@@ -61,19 +62,28 @@ const updateEmployee = async (
   modalEditE,
   regencyEdit,
   phoneNumberEdit,
-  addressEdit
+  addressEdit,
+  image
 ) => {
-  let results = await connection.query(
-    `UPDATE employees SET name_employee = ?, name_department =?, role = ?, phone= ?, address=? WHERE id = ?`,
+  let [result, fields] = await connection.query(
+    `UPDATE employees SET name_employee = ?, name_department =?, role = ?, phone= ?, address=?, image = ? WHERE id = ?`,
     [
       nameEdit,
       modalEditE,
       regencyEdit,
       phoneNumberEdit,
       addressEdit,
+      image,
       editemployeeId,
     ]
   );
+};
+const getUserAvatar = async (id) => {
+  const [results, fields] = await connection.query(
+    "SELECT image FROM employees WHERE name_employee = ?",
+    [id]
+  );
+  return results[0]?.image; //Trả về avatar hoặc undefined nếu không tìm thấy
 };
 module.exports = {
   displayEmployee,
@@ -82,4 +92,5 @@ module.exports = {
   createDepartment,
   deleteEmployee,
   updateEmployee,
+  getUserAvatar,
 };

@@ -175,13 +175,15 @@ function EditModalProduct(
   document.getElementById("quantityEdit").value = quantity;
   document.getElementById("avatarPreviewEdit").src = basePath + image;
 }
-function openEditEmployee(id, name, department, role, phone, address) {
+function openEditEmployee(id, name, department, role, phone, address, image) {
+  const basePath = "/assets/content/upload/";
   document.getElementById("editemployeeId").value = id;
   document.getElementById("nameEdit").value = name;
   document.getElementById("modalEditElement").value = department;
   document.getElementById("regencyEdit").value = role;
   document.getElementById("phoneNumberEdit").value = phone;
   document.getElementById("addressEdit").value = address;
+  document.getElementById("avatarPreviewEdit").src = basePath + image;
 }
 function openEditAccount(id, name, account, password, role) {
   document.getElementById("editAccountId").value = id;

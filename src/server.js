@@ -11,6 +11,8 @@ const {
   authorizeUser,
 } = require("./middleware/jwtMiddleware");
 // req.body
+
+const avatarMiddleware = require("./middleware/avatarMiddleware");
 app.use(express.json()); // for json
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); // Sử dụng cookie-parser để đọc cookie
@@ -18,6 +20,8 @@ configViewEngine(app);
 
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
+
+app.use(avatarMiddleware);
 
 app.use("/admin", authenticateJWT, authorizeAdmin, adminRouter);
 app.use("/user", authenticateJWT, authorizeUser, userRouter);

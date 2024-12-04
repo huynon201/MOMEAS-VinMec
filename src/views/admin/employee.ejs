@@ -30,9 +30,9 @@
     <link rel="stylesheet" href="/admin/css/category.css" />
     <link rel="stylesheet" href="/admin/css/product.css" />
     <!-- JavaScript  -->
-
     <script src="/admin/js/main.js" defer></script>
     <script src="/admin/js/datalist.js" defer></script>
+    <script src="/admin/js/image.js" defer></script>
   </head>
   <body>
     <%- include("./layout/spinner.ejs") %>
@@ -69,7 +69,10 @@
                     class="btn-close position-absolute end-0 me-3"
                     data-bs-dismiss="modal"></button>
                 </div>
-                <form action="/admin/create-employee" method="POST">
+                <form
+                  action="/admin/create-employee"
+                  method="POST"
+                  enctype="multipart/form-data">
                   <div class="modal-body">
                     <div class="mb-3 mt-3">
                       <p>Tên nhân viên:</p>
@@ -130,6 +133,33 @@
                         name="address"
                         required />
                     </div>
+                    <div class="mb-3 mt-3">
+                      <p>Ảnh</p>
+                      <div class="upload-btn-wrapper">
+                        <div class="upload-wrapper plus">
+                          <i class="bx bx-plus" style="font-size: 24px"></i>
+                          <span>Tải ảnh lên</span>
+
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept="image/*"
+                            required />
+                        </div>
+                        <div class="upload-wrapper">
+                          <img
+                            style="display: none"
+                            id="avatarPreview"
+                            alt="avatar preview"
+                            src="" />
+                        </div>
+                      </div>
+                      <p
+                        class="fileNameDisplay"
+                        style="margin-top: 10px; font-style: italic"></p>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button
@@ -146,7 +176,7 @@
           </div>
           <!-- end modal tạo phòng ban -->
         </div>
-        <div class="table-list">
+        <div class="table-list show-table">
           <table class="table-danh-muc table table-hover">
             <thead>
               <tr>
@@ -157,6 +187,7 @@
                 <th>Vai trò</th>
                 <th>Số điện thoại</th>
                 <th>Địa chỉ</th>
+                <th>Ảnh</th>
                 <th>Hành động</th>
               </tr>
             </thead>
@@ -171,11 +202,14 @@
                 <td><%= employee.phone %></td>
                 <td><%= employee.address %></td>
                 <td>
+                  <img src="/assets/content/upload/<%= employee.image %>" />
+                </td>
+                <td>
                   <button
                     class="btn btn-warning"
                     data-bs-toggle="modal"
                     data-bs-target="#modalEdit"
-                    onclick="openEditEmployee('<%= employee.id %>', '<%= employee.name_employee %>', '<%= employee.name_department %>','<%= employee.role %>','<%= employee.phone %>','<%= employee.address %>')">
+                    onclick="openEditEmployee('<%= employee.id %>', '<%= employee.name_employee %>', '<%= employee.name_department %>','<%= employee.role %>','<%= employee.phone %>','<%= employee.address %>', '<%= employee.image %>')">
                     Sửa
                   </button>
                   <button
@@ -246,7 +280,10 @@
               class="btn-close position-absolute end-0 me-3"
               data-bs-dismiss="modal"></button>
           </div>
-          <form action="/admin/update-employee" method="POST">
+          <form
+            action="/admin/update-employee"
+            method="POST"
+            enctype="multipart/form-data">
             <div class="modal-body">
               <input type="hidden" id="editemployeeId" name="editemployeeId" />
               <div class="mb-3 mt-3">
@@ -307,6 +344,31 @@
                   placeholder="Tên nhân viên"
                   name="address"
                   required />
+              </div>
+              <div class="mb-3 mt-3">
+                <p>Ảnh</p>
+                <div class="upload-btn-wrapper">
+                  <div class="upload-wrapper plus">
+                    <i class="bx bx-plus" style="font-size: 24px"></i>
+                    <span>Tải ảnh lên</span>
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="imageEdit"
+                      name="image"
+                      accept="image/*" />
+                  </div>
+                  <div class="upload-wrapper">
+                    <img
+                      style="display: none"
+                      id="avatarPreviewEdit"
+                      src="/assets/content/upload/"
+                      alt="avatar preview" />
+                  </div>
+                </div>
+                <p
+                  class="fileNameDisplay"
+                  style="margin-top: 10px; font-style: italic"></p>
               </div>
             </div>
             <div class="modal-footer">

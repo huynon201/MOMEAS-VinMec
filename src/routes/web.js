@@ -34,6 +34,7 @@ const {
   postCreateEmployee,
   postDeleteEmployee,
   postUpdateEmployee,
+  uploadE,
 } = require("../controllers/employeeController");
 // accountController
 const {
@@ -87,9 +88,17 @@ adminRouter.post("/delete-department", postDeleteDepartment);
 adminRouter.post("/update-department", postUpdateDepartment);
 
 adminRouter.get("/employee", getemployeePage);
-adminRouter.post("/create-employee", postCreateEmployee);
+adminRouter.post(
+  "/create-employee",
+  uploadE.fields([{ name: "image", maxCount: 1 }]),
+  postCreateEmployee
+);
 adminRouter.post("/delete-employee", postDeleteEmployee);
-adminRouter.post("/update-employee", postUpdateEmployee);
+adminRouter.post(
+  "/update-employee",
+  uploadE.fields([{ name: "image", maxCount: 1 }]),
+  postUpdateEmployee
+);
 
 adminRouter.get("/account", getAccountPage);
 adminRouter.post("/create-account", postCreateAccount);

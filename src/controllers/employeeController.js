@@ -1,3 +1,14 @@
+var multer = require("multer");
+const storage = multer.diskStorage({
+  destination: (req, file, res) => {
+    res(null, "./src/public/assets/content/upload");
+  },
+  filename: (req, file, res) => {
+    res(null, file.originalname);
+  },
+});
+const uploadE = multer({ storage: storage });
+
 const {
   displayEmployee,
   displayDepartment,
@@ -31,6 +42,7 @@ const postCreateEmployee = async (req, res) => {
     id = generateRandomId();
     isUnique = await checkUniqueId(id);
   }
+  const image = req.files.image[0].filename;
   const at = new Date();
   const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
   const { name, department, regency, phoneNumber, address } = req.body;
@@ -41,9 +53,9 @@ const postCreateEmployee = async (req, res) => {
     regency,
     phoneNumber,
     address,
-    create_at
+    create_at,
+    image
   );
-  console.log(create_at);
   res.redirect("back");
 };
 const postDeleteEmployee = async (req, res) => {
@@ -52,6 +64,7 @@ const postDeleteEmployee = async (req, res) => {
   res.redirect("back");
 };
 const postUpdateEmployee = async (req, res) => {
+  const image = req.files.image[0].filename;
   const { editemployeeId, name, department, regency, phoneNumber, address } =
     req.body;
   await updateEmployee(
@@ -60,7 +73,8 @@ const postUpdateEmployee = async (req, res) => {
     department,
     regency,
     phoneNumber,
-    address
+    address,
+    image
   );
   res.redirect("back");
 };
@@ -69,4 +83,5 @@ module.exports = {
   postCreateEmployee,
   postDeleteEmployee,
   postUpdateEmployee,
+  uploadE,
 };
