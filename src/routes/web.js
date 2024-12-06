@@ -55,6 +55,9 @@ const {
   getImportPage,
   postCreateImport,
 } = require("../controllers/importController");
+
+// reportController
+const { getReportPage, getExIm } = require("../controllers/reportController");
 adminRouter.get("/", getHomePage);
 
 adminRouter.get("/categorary", getCategoraryPage);
@@ -121,6 +124,9 @@ adminRouter.post("/create-export", postCreateExport);
 
 adminRouter.get("/import", getImportPage);
 adminRouter.post("/create-import", postCreateImport);
+
+adminRouter.get("/report", getReportPage);
+adminRouter.post("/get-exim", getExIm);
 
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);

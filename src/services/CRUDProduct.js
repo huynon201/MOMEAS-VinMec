@@ -3,7 +3,7 @@ const displayProduct = async (page = null, limit = null) => {
   if (page === null || limit === null) {
     // Lấy toàn bộ danh sách nhân viên
     const [results] = await connection.query(
-      `SELECT name, id FROM products ORDER BY name`
+      `SELECT name, id, quantity FROM products ORDER BY name`
     );
     return results;
   } else {
