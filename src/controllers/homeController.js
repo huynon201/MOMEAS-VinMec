@@ -26,45 +26,83 @@ const getHomePage = async (req, res) => {
 };
 
 const getCategoraryPage = async (req, res) => {
-  const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
-  const limit = 10; // Số phần tử mỗi trang
+  try {
+    // throw new Error("Simulated database error for testing");
+    const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
+    const limit = 10; // Số phần tử mỗi trang
 
-  // Gọi service để lấy dữ liệu
-  const { categories, totalItems } = await displayCategorary(page, limit);
+    // Gọi service để lấy dữ liệu
+    const { categories, totalItems } = await displayCategorary(page, limit);
 
-  const totalPages = Math.ceil(totalItems / limit); // Tính tổng số trang
+    const totalPages = Math.ceil(totalItems / limit); // Tính tổng số trang
 
-  // Render ra view
-  return res.render("categorary.ejs", {
-    activePage: "category",
-    listcategori: categories,
-    currentPage: page,
-    totalPages,
-  });
+    // Render ra view
+    return res.render("categorary.ejs", {
+      activePage: "category",
+      listcategori: categories,
+      currentPage: page,
+      totalPages,
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error.message);
+    return res.render("categorary.ejs", {
+      activePage: "category",
+      listcategori: [],
+      currentPage: 1,
+      totalPages: 0,
+      errorMessage: "LỖI!! Không thể lấy được danh mục.",
+    });
+  }
 };
 const postCategorary = async (req, res) => {
-  let id;
-  let isUnique = false;
-  while (!isUnique) {
-    id = generateRandomId();
-    isUnique = await checkUniqueId(id);
+  try {
+    // throw new Error("Simulated database error for testing");
+    let id;
+    let isUnique = false;
+    while (!isUnique) {
+      id = generateRandomId();
+      isUnique = await checkUniqueId(id);
+    }
+    const { name, des } = req.body;
+    const at = new Date();
+    const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
+    await createCatrgory(id, name, des, create_at);
+    res.json({ status: "success", message: "Thêm danh mục thành công!", id });
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: "Không thể thêm danh mục. Vui lòng thử lại!",
+    });
   }
-  const { name, des } = req.body;
-
-  const at = new Date();
-  const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
-  await createCatrgory(id, name, des, create_at);
-  res.redirect("back");
 };
 const postDeleteCategorary = async (req, res) => {
-  const id = req.body.id;
-  await deleteCategorary(id);
-  res.redirect("back");
+  try {
+    const id = req.body.id;
+    await deleteCategorary(id);
+    res.redirect("back");
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: "Không thể Xóa danh mục. Vui lòng thử lại!",
+    });
+  }
 };
 const postUpdateCategory = async (req, res) => {
-  const { editUserId, name, des } = req.body;
-  await updateCategory(editUserId, name, des);
-  res.redirect("back");
+  try {
+    const { id, name, des } = req.body;
+    console.log("req.body :>> ", id);
+    await updateCategory(id, name, des);
+    // res.redirect("back");
+    res.json({
+      status: "success",
+      message: "Update danh mục thành công!",
+    });
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: "Không thể update danh mục. Vui lòng thử lại!",
+    });
+  }
 };
 module.exports = {
   getHomePage,

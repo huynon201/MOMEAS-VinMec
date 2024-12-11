@@ -1,49 +1,51 @@
 function render_xuat() {
   const tablebody = document.querySelector("#render-xuat tbody");
 
-  // Kiểm tra `tablebody` có tồn tại không
   if (!tablebody) {
     console.error("Element #render-xuat tbody không tồn tại!");
     return;
   }
 
-  // Gửi yêu cầu AJAX đến API để lấy danh sách sản phẩm
-  fetch("/admin/api/products")
+  // Gửi yêu cầu AJAX đến route `/admin/product`
+  fetch("/admin/product", {
+    headers: { Accept: "application/json" },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Failed to fetch products");
       return response.json();
     })
-    .then((listProduct) => {
+    .then((data) => {
+      const listProduct = data.products;
       // Tạo hàng mới
       const row = document.createElement("tr");
 
       let productOptions = ""; // Biến lưu kết quả
-      listProduct.forEach(function (products) {
-        productOptions += `<li>${products.name}</li>`; // Thêm vào chuỗi kết quả
+      listProduct.forEach(function (product) {
+        productOptions += `<li>${product.name}</li>`;
       });
 
       row.innerHTML = `
-            <td>
-            <fieldset>
-              <input
-                type="search"
-                class="form-control producttb"
-                name="name_producttb"
-                placeholder="Chọn vật tư"
-                required
-              />
-              <ul class="suggestions suggestionProduct">
-                ${productOptions}
-              </ul>
-              </fieldset>
-            </td>
-            <td>
-              <input id="so-luong-output" class="form-control" type="number" value="1" min="1" max="10" name="quantity">
-            </td>
-            <td>
-              <button class="delete-btn btn btn-danger btn-sm">Xóa</button>
-            </td>
-          `;
+        <td>
+          <fieldset>
+            <input
+              type="search"
+              class="form-control producttb"
+              name="name_producttb"
+              placeholder="Chọn vật tư"
+              required
+            />
+            <ul class="suggestions suggestionProduct">
+              ${productOptions}
+            </ul>
+          </fieldset>
+        </td>
+        <td>
+          <input id="so-luong-output" class="form-control" type="number" value="1" min="1" name="quantity">
+        </td>
+        <td>
+          <button class="delete-btn btn btn-danger btn-sm">Xóa</button>
+        </td>
+      `;
 
       // Thêm hàng mới vào bảng
       tablebody.appendChild(row);

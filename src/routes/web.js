@@ -109,11 +109,6 @@ adminRouter.post("/delete-account", postDeleteAccount);
 adminRouter.post("/update-account", postUpdateAccount);
 
 adminRouter.get("/export", getExportPage);
-const { displayProduct } = require("../services/CRUDProduct");
-adminRouter.get("/api/products", async (req, res) => {
-  let product = await displayProduct();
-  res.json(product);
-});
 const { displayDetail } = require("../services/CRUDExport");
 adminRouter.get("/api/detail", async (req, res) => {
   let detail = await displayDetail();

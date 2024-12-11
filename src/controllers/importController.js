@@ -43,6 +43,7 @@ const postCreateImport = async (req, res) => {
   const create_at = moment(at).format("YYYY-MM-DD HH:mm:ss");
 
   const { name_producttb, quantity, name_import } = req.body;
+  console.log("req.body :>> ", req.body);
   await createImport(id, name_import, create_at);
   await createImportDetails(name_import, name_producttb, quantity);
 

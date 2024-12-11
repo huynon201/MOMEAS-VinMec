@@ -8,12 +8,15 @@ function render_xuat() {
   }
 
   // Gửi yêu cầu AJAX đến API để lấy danh sách sản phẩm
-  fetch("/admin/api/products")
+  fetch("/admin/product", {
+    headers: { Accept: "application/json" },
+  })
     .then((response) => {
       if (!response.ok) throw new Error("Failed to fetch products");
       return response.json();
     })
-    .then((listProduct) => {
+    .then((data) => {
+      const listProduct = data.products;
       // Tạo hàng mới
       const row = document.createElement("tr");
 

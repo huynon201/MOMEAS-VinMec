@@ -26,6 +26,12 @@ const getProductPage = async (req, res) => {
   let { products, totalItems } = await displayProduct(page, limit);
   const totalPages = Math.ceil(totalItems / limit);
   let category = await displayCategory();
+  // Kiểm tra yêu cầu có phải trả về JSON không
+  if (req.headers.accept.includes("application/json")) {
+    return res.json({
+      products,
+    });
+  }
   return res.render("product.ejs", {
     activePage: "product",
     listProduct: products,

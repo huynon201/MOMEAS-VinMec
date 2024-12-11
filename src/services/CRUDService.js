@@ -2,26 +2,31 @@ const connection = require("../configs/database");
 
 // phân trang
 const displayCategorary = async (page, limit) => {
-  const offset = (page - 1) * limit; // Tính vị trí bắt đầu
+  try {
+    // throw new Error("Simulated database error for testing");
+    const offset = (page - 1) * limit; // Tính vị trí bắt đầu
 
-  // Đếm tổng số danh mục
-  const [countResult] = await connection.query(
-    "SELECT COUNT(*) AS total FROM categories"
-  );
-  //  return ra 7
+    // Đếm tổng số danh mục
+    const [countResult] = await connection.query(
+      "SELECT COUNT(*) AS total FROM categories"
+    );
+    //  return ra 7
 
-  const totalItems = countResult[0].total;
+    const totalItems = countResult[0].total;
 
-  // Lấy danh sách danh mục với LIMIT và OFFSET
-  const [results] = await connection.query(
-    "SELECT * FROM categories ORDER BY created_at ASC LIMIT ? OFFSET ?",
-    [limit, offset]
-  );
+    // Lấy danh sách danh mục với LIMIT và OFFSET
+    const [results] = await connection.query(
+      "SELECT * FROM categories ORDER BY created_at ASC LIMIT ? OFFSET ?",
+      [limit, offset]
+    );
 
-  return {
-    categories: results,
-    totalItems,
-  };
+    return {
+      categories: results,
+      totalItems,
+    };
+  } catch (error) {
+    throw new error("Failed to fetch categories: " + error.message);
+  }
 };
 const createCatrgory = async (id, name, des, create_at) => {
   let [results, fields] = await connection.query(
@@ -51,6 +56,7 @@ const checkCategoryUsedInProduct = async (categoryName) => {
   return results[0].count > 0; // Nếu có bản ghi sử dụng tên danh mục, trả về true
 };
 const updateCategory = async (id, name, des) => {
+  console.log("id, name, des :>> ", id, name, des);
   let [results, fields] = await connection.query(
     `UPDATE categories
     SET name = ?, description = ?

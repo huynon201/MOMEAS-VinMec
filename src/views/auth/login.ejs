@@ -266,13 +266,9 @@
               data-bs-dismiss="modal"
               aria-label="Close"></button>
           </div>
-          <form action="/login-endpoint" method="POST">
+          <form id="loginForm">
             <div class="modal-body">
-              <% if (query.error === 'wrongpassword') { %>
-              <p class="text-danger">Mật khẩu không đúng. Vui lòng thử lại.</p>
-              <% } else if (query.error === 'usernotfound') { %>
-              <p class="text-danger">Người dùng không tồn tại.</p>
-              <% } %>
+              <p class="text-danger error-message" id="errorMessage"></p>
               <div class="mb-3">
                 <label for="username" class="form-label">Tên đăng nhập</label>
                 <input
@@ -280,7 +276,8 @@
                   class="form-control"
                   name="username"
                   id="username"
-                  placeholder="Nhập tên đăng nhập" />
+                  placeholder="Nhập tên đăng nhập"
+                  required />
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Mật khẩu</label>
@@ -289,7 +286,8 @@
                   class="form-control"
                   name="password"
                   id="password"
-                  placeholder="Nhập mật khẩu" />
+                  placeholder="Nhập mật khẩu"
+                  required />
               </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
@@ -304,4 +302,5 @@
   </body>
 
   <script src="/admin/js/main.js"></script>
+  <script src="/users/js/login.js"></script>
 </html>

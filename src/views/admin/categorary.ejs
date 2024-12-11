@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/admin/css/category.css" />
 
     <!-- JavaScript  -->
+    <script src="/admin/js/errorAdd.js" defer></script>
     <script src="/admin/js/main.js" defer></script>
   </head>
 
@@ -67,7 +68,7 @@
               </tr>
             </thead>
 
-            <tbody>
+            <tbody id="categoryTableBody">
               <% listcategori.forEach(function(category, index) { %>
               <%#if(category.name == "a") { %> <%# (!"searchInput" ||
               category.name.includes("a")) { %>
@@ -132,8 +133,12 @@
           <%- include("./layout/pagination.ejs") %>
           <!-- end phân trang -->
         </div>
+        <% if (typeof errorMessage !== "undefined" && errorMessage) { %>
+        <div class="alert alert-danger text-center"><%= errorMessage %></div>
+        <% } %>
       </div>
     </div>
+    <div id="alert-container" class="mt-3"></div>
 
     <!-- start modal tạo danh mục -->
     <div
@@ -152,7 +157,7 @@
               class="btn-close position-absolute end-0 me-3"
               data-bs-dismiss="modal"></button>
           </div>
-          <form action="/admin/create-category" method="POST">
+          <form id="addform">
             <div class="modal-body">
               <div class="mb-3 mt-3">
                 <p>Tên danh mục:</p>
@@ -169,7 +174,6 @@
                 rows="4"
                 id="des"
                 class="form-control"
-                id="des"
                 placeholder="Mô tả"
                 name="des"
                 required></textarea>
@@ -181,7 +185,9 @@
                 data-bs-dismiss="modal">
                 Hủy
               </button>
-              <button type="submit" class="btn btn-info">Tạo</button>
+              <button id="createCategoryBtn" type="submit" class="btn btn-info">
+                Tạo
+              </button>
             </div>
           </form>
         </div>
@@ -209,9 +215,9 @@
               data-bs-dismiss="modal"
               aria-label="Close"></button>
           </div>
-          <form action="/admin/update-category" method="POST">
+          <form id="updateForm">
             <div class="modal-body">
-              <input type="hidden" id="editUserId" name="editUserId" />
+              <input type="hidden" id="editUserId" name="id" />
               <div class="mb-3 mt-3">
                 <p>Tên danh mục:</p>
                 <input
@@ -238,7 +244,9 @@
                 data-bs-dismiss="modal">
                 Hủy
               </button>
-              <button type="submit" class="btn btn-info">Lưu</button>
+              <button id="updateCategoryBtn" type="submit" class="btn btn-info">
+                Lưu
+              </button>
             </div>
           </form>
         </div>
