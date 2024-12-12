@@ -89,9 +89,8 @@ const postDeleteCategorary = async (req, res) => {
 };
 const postUpdateCategory = async (req, res) => {
   try {
-    const { id, name, des } = req.body;
-    console.log("req.body :>> ", id);
-    await updateCategory(id, name, des);
+    const { editUserId, name, des } = req.body;
+    await updateCategory(editUserId, name, des);
     // res.redirect("back");
     res.json({
       status: "success",

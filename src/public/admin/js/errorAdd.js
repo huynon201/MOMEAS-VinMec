@@ -109,6 +109,9 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error("Error during adding category:", error);
       modal.hide();
+      setTimeout(() => {
+        alert.remove();
+      }, 3000);
       const alertContainer = document.getElementById("alert-container");
       alertContainer.innerHTML = "";
       const alert = document.createElement("div");
@@ -132,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     const formData = new FormData(updateForm);
     const data = {
-      id: formData.get("editUserId"),
+      editUserId: formData.get("editUserId"),
       name: formData.get("name"),
       des: formData.get("des"),
     };
@@ -164,12 +167,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Nếu update thành công, reset form và đóng modal
       if (result.status === "success") {
+        const rowToUpdate = document.querySelector(
+          `#categoryRow-${data.editUserId}`
+        );
+        if (rowToUpdate) {
+          rowToUpdate.querySelector("td:nth-child(3)").textContent = data.name; // Cập nhật tên
+          rowToUpdate.querySelector("td:nth-child(4)").textContent = data.des; // Cập nhật mô tả
+        }
         updateForm.reset();
         modal.hide();
       }
     } catch (error) {
       console.error("Error during category update:", error);
       modal.hide();
+      setTimeout(() => {
+        alert.remove();
+      }, 3000);
       const alertContainer = document.getElementById("alert-container");
       alertContainer.innerHTML = "";
       const alert = document.createElement("div");

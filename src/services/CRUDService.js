@@ -56,7 +56,6 @@ const checkCategoryUsedInProduct = async (categoryName) => {
   return results[0].count > 0; // Nếu có bản ghi sử dụng tên danh mục, trả về true
 };
 const updateCategory = async (id, name, des) => {
-  console.log("id, name, des :>> ", id, name, des);
   let [results, fields] = await connection.query(
     `UPDATE categories
     SET name = ?, description = ?
