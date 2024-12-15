@@ -103,10 +103,24 @@ const postUpdateCategory = async (req, res) => {
     });
   }
 };
+const getHomePageUser = async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // Trang hiện tại (mặc định là 1)
+  const limit = 8; // Số phần tử mỗi trang
+
+  let { products, totalItems } = await displayProduct(page, limit);
+  const totalPages = Math.ceil(totalItems / limit);
+  return res.render("homeUser.ejs", {
+    activePage: "home",
+    listProduct: products,
+    currentPage: page,
+    totalPages,
+  });
+};
 module.exports = {
   getHomePage,
   getCategoraryPage,
   postCategorary,
   postDeleteCategorary,
   postUpdateCategory,
+  getHomePageUser,
 };

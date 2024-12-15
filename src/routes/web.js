@@ -9,6 +9,7 @@ const {
   postCategorary,
   postDeleteCategorary,
   postUpdateCategory,
+  getHomePageUser,
 } = require("../controllers/homeController");
 // productcontroller
 const {
@@ -123,6 +124,7 @@ adminRouter.post("/create-import", postCreateImport);
 adminRouter.get("/report", getReportPage);
 adminRouter.post("/get-exim", getExIm);
 
+userRouter.get("/", getHomePageUser);
 router.get("/", getLoginPage);
 router.post("/login-endpoint", login);
 module.exports = {
