@@ -30,8 +30,9 @@
     <link rel="stylesheet" href="/admin/css/category.css" />
     <link rel="stylesheet" href="/admin/css/product.css" />
     <!-- JavaScript  -->
-    <script src="/admin/js/main.js" defer></script>
     <script src="/admin/js/datalist.js" defer></script>
+    <script src="/admin/js/checkpw.js" defer></script>
+    <script src="/admin/js/main.js" defer></script>
   </head>
   <body>
     <%- include("./layout/spinner.ejs") %>
@@ -62,14 +63,15 @@
               <div class="modal-content">
                 <div
                   class="modal-header d-flex justify-content-center position-relative">
-                  <h4>Tạo Nhân Viên</h4>
+                  <h4>Tạo tài khoản</h4>
                   <button
                     type="button"
                     class="btn-close position-absolute end-0 me-3"
                     data-bs-dismiss="modal"></button>
                 </div>
-                <form action="/admin/create-account" method="POST">
+                <form id="addform">
                   <div class="modal-body">
+                    <p class="text-danger error-message" id="errorMessage"></p>
                     <div class="mb-3 mt-3">
                       <p>Tên nhân viên:</p>
                       <fieldset>
@@ -104,7 +106,7 @@
 
                       <input
                         type="password"
-                        id="address"
+                        id="password"
                         class="form-control"
                         placeholder="Nhập mật khẩu"
                         name="pwd"
@@ -136,7 +138,9 @@
                       data-bs-dismiss="modal">
                       Hủy
                     </button>
-                    <button type="submit" class="btn btn-info">Tạo</button>
+                    <button id="createBtn" type="submit" class="btn btn-info">
+                      Tạo
+                    </button>
                   </div>
                 </form>
               </div>
@@ -157,9 +161,9 @@
                 <th>Hành động</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="TableBody">
               <% listAccount.forEach(function(account, index) {%>
-              <tr>
+              <tr id="Row-<%= account.id %>">
                 <td><%= index+1 %></td>
                 <td><%= account.id %></td>
                 <td><%= account.name_employee %></td>
@@ -223,6 +227,10 @@
           <%- include("./layout/pagination.ejs") %>
           <!-- end phân trang -->
         </div>
+        <% if (typeof errorMessage !== "undefined" && errorMessage) { %>
+        <div class="alert alert-danger text-center"><%= errorMessage %></div>
+        <% } %>
+        <div id="alert-container" class="mt-3"></div>
       </div>
     </div>
     <!-- start modal edit account-->
@@ -242,9 +250,10 @@
               class="btn-close position-absolute end-0 me-3"
               data-bs-dismiss="modal"></button>
           </div>
-          <form action="/admin/update-account" method="POST">
+          <form id="updateForm">
             <input type="hidden" id="editAccountId" name="editAccountId" />
             <div class="modal-body">
+              <p class="text-danger error-message" id="errorMessagee"></p>
               <div class="mb-3 mt-3">
                 <p>Tên nhân viên:</p>
                 <fieldset>
@@ -311,7 +320,9 @@
                 data-bs-dismiss="modal">
                 Hủy
               </button>
-              <button type="submit" class="btn btn-info">Tạo</button>
+              <button id="updateBtn" type="submit" class="btn btn-info">
+                Lưu
+              </button>
             </div>
           </form>
         </div>
