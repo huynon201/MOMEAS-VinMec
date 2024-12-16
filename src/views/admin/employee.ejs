@@ -33,6 +33,7 @@
     <script src="/admin/js/main.js" defer></script>
     <script src="/admin/js/datalist.js" defer></script>
     <script src="/admin/js/image.js" defer></script>
+    <script src="/users/js/search.js" defer></script>
   </head>
   <body>
     <%- include("./layout/spinner.ejs") %>
@@ -193,7 +194,7 @@
             </thead>
             <tbody>
               <% listEmployee.forEach(function(employee, index) {%>
-              <tr>
+              <tr class="trow">
                 <td><%= index+1 %></td>
                 <td><%= employee.id %></td>
                 <td><%= employee.name_employee %></td>

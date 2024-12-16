@@ -34,6 +34,7 @@
     <script src="/admin/js/export.js" defer></script>
     <script src="/admin/js/datalist.js" defer></script>
     <script src="/admin/js/datalistproduct.js" defer></script>
+    <script src="/users/js/search.js" defer></script>
   </head>
   <body>
     <%- include("./layout/spinner.ejs") %>
@@ -71,7 +72,10 @@
               <% listExport.forEach(function(ex, index) { %> <%#if(category.name
               == "a") { %> <%# (!"searchInput" || category.name.includes("a")) {
               %>
-              <tr data-bs-toggle="modal" data-bs-target="#modal-<%= ex.id %>">
+              <tr
+                data-bs-toggle="modal"
+                data-bs-target="#modal-<%= ex.id %>"
+                class="trow">
                 <td><%= index + 1 %></td>
                 <td><%= ex.id %></td>
                 <td><%= ex.name %></td>

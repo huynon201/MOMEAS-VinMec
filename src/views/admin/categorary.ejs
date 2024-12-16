@@ -33,6 +33,7 @@
     <!-- JavaScript  -->
     <script src="/admin/js/errorAdd.js" defer></script>
     <script src="/admin/js/main.js" defer></script>
+    <script src="/users/js/search.js" defer></script>
   </head>
 
   <body>
@@ -70,12 +71,11 @@
 
             <tbody id="categoryTableBody">
               <% listcategori.forEach(function(category, index) { %>
-              <%#if(category.name == "a") { %> <%# (!"searchInput" ||
-              category.name.includes("a")) { %>
-              <tr id="categoryRow-<%= category.id %>">
+
+              <tr class="trow" id="categoryRow-<%= category.id %>">
                 <td><%= index + 1 %></td>
                 <td><%= category.id %></td>
-                <td><%= category.name %></td>
+                <td class="categoryName"><%= category.name %></td>
                 <td><%= category.description %></td>
                 <td>
                   <button

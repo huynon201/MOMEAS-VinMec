@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="/admin/css/category.css" />
     <!-- JavaScript  -->
     <script src="/admin/js/main.js" defer></script>
+    <script src="/users/js/search.js" defer></script>
   </head>
   <body>
     <%- include("./layout/spinner.ejs") %>
@@ -63,7 +64,7 @@
             </thead>
             <tbody>
               <% listdepartment.forEach(function(department, index) { %>
-              <tr>
+              <tr class="trow">
                 <td><%= index + 1 %></td>
                 <td><%= department.id %></td>
                 <td><%= department.name %></td>
