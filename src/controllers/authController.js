@@ -17,14 +17,14 @@ const login = async (req, res) => {
         const token = jwt.sign(
           { name: user.name_account, role: user.role },
           process.env.JWT_SECRET,
-          { expiresIn: "2h" }
+          { expiresIn: "30d" }
         );
         const userid = user.name_employee;
         const information = await getUserAvatar(userid);
         res.cookie("token", token, {
           httpOnly: true,
           secure: false,
-          maxAge: 7200000,
+          maxAge: 30 * 24 * 60 * 60 * 1000,
         });
         res.cookie("information", JSON.stringify(information));
 
@@ -33,14 +33,12 @@ const login = async (req, res) => {
           redirect: user.role === "admin" ? "/admin" : "/user",
         });
       } else {
-        // res.redirect("/login?error=wrongpassword");
         return res.status(401).json({
           success: false,
           message: "wrongpassword",
         });
       }
     } else {
-      // res.redirect("/login?error=usernotfound");
       return res.status(404).json({
         success: false,
         message: "usernotfound",
