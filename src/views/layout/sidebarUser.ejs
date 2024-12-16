@@ -17,15 +17,21 @@
             <span class="line"></span>
           </div>
           <li class="item <%= activePage === 'home' ? 'active' : '' %>">
-            <a href="/admin" class="link flex">
+            <a href="/user" class="link flex">
               <i class="bx bxs-home"></i>
               <span>Trang chủ</span>
             </a>
           </li>
-          <li class="item <%= activePage === 'category' ? 'active' : '' %>">
-            <a href="/admin/categorary" class="link flex">
-              <i class="bx bxs-grid-alt"></i>
-              <span>Danh mục</span>
+        </ul>
+        <ul class="menu-item">
+          <div class="menu-title flex">
+            <span class="title">Editor</span>
+            <span class="line"></span>
+          </div>
+          <li class="item">
+            <a href="#" class="link flex">
+              <i class="bx bxs-send"></i>
+              <span>Yêu cầu vật tư</span>
             </a>
           </li>
         </ul>
@@ -35,9 +41,9 @@
           <img src="/assets/content/upload/<%= avatar %>" alt="" />
         </span>
         <div class="data-text">
-          <span class="name">Nguyễn Huy Đạt</span>
-          <span class="email">Admin</span>
-          <span style="margin-left: 60px" class="icon-out">
+          <p class="name"><%= name %></p>
+          <span class="email"><%= role %></span>
+          <span class="icon-out">
             <a href="/">
               <i
                 style="font-size: 25px"

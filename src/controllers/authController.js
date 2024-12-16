@@ -20,13 +20,13 @@ const login = async (req, res) => {
           { expiresIn: "2h" }
         );
         const userid = user.name_employee;
-        const imguser = await getUserAvatar(userid);
+        const information = await getUserAvatar(userid);
         res.cookie("token", token, {
           httpOnly: true,
           secure: false,
           maxAge: 7200000,
         });
-        res.cookie("img", imguser);
+        res.cookie("information", JSON.stringify(information));
 
         return res.status(200).json({
           success: true,
@@ -56,9 +56,9 @@ const login = async (req, res) => {
 };
 const getLoginPage = async (req, res) => {
   res.cookie("token", "", { httpOnly: true, expires: new Date(0) });
-  res.cookie("img", "");
+  res.cookie("information", "");
   res.clearCookie("token");
-  res.clearCookie("img");
+  res.clearCookie("information");
   res.locals.avatar = "default.jpg";
 
   return res.render("login.ejs");

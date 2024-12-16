@@ -80,10 +80,10 @@ const updateEmployee = async (
 };
 const getUserAvatar = async (id) => {
   const [results, fields] = await connection.query(
-    "SELECT image FROM employees WHERE name_employee = ?",
+    "SELECT image, name_employee, role FROM employees WHERE name_employee = ?",
     [id]
   );
-  return results[0]?.image; //Trả về avatar hoặc undefined nếu không tìm thấy
+  return results[0];
 };
 module.exports = {
   displayEmployee,
