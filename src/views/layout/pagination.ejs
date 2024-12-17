@@ -19,11 +19,15 @@
     </li>
     <% } %>
     <li class="page-item">
+      <%if(totalPages == 0) {%>
+      <a href="?page=<%= currentPage + 1 %>" class="page-link disabled">&gt;</a>
+      <% }else { %>
       <a
         href="?page=<%= currentPage + 1 %>"
         class="page-link <%= currentPage == totalPages ? 'disabled' : '' %>">
         &gt;
       </a>
+      <% } %>
     </li>
   </ul>
 </div>
