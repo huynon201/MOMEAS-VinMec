@@ -1,5 +1,4 @@
 const { generateRandomId } = require("../untils/randomUntils");
-const { formatDate } = require("../untils/timeZone");
 const {
   displayCategorary,
   createCatrgory,
